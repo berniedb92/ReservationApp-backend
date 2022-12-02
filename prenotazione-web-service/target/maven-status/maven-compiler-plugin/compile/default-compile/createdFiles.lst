@@ -1,0 +1,14 @@
+com\mycompany\prenotazionewebspringboot\model\TennisModelConfiguration.class
+com\mycompany\prenotazionewebspringboot\control\UtenteAnonimoController.class
+com\mycompany\prenotazionewebspringboot\control\UtenteAnonimoVincoliControlException.class
+com\mycompany\prenotazionewebspringboot\ApplicationCostants.class
+com\mycompany\prenotazionewebspringboot\control\UtenteAnonimoRestController.class
+com\mycompany\prenotazionewebspringboot\model\dao\ClienteDao.class
+com\mycompany\prenotazionewebspringboot\model\entity\Cliente.class
+com\mycompany\prenotazionewebspringboot\model\JdbcConnection.class
+com\mycompany\prenotazionewebspringboot\model\entity\Prenotazione.class
+com\mycompany\prenotazionewebspringboot\model\TennisModelException.class
+com\mycompany\prenotazionewebspringboot\ApplicationTennis.class
+com\mycompany\prenotazionewebspringboot\model\dao\QueryDictionary.class
+com\mycompany\prenotazionewebspringboot\control\UtenteAnonimoFonteDatiControlException.class
+com\mycompany\prenotazionewebspringboot\model\entity\Campo.class

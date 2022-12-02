@@ -1,0 +1,23 @@
+#==========================================================
+#= GestUser Web Service - Versione Base
+#==========================================================
+
+server:
+  port: 8019
+spring:
+  application:
+    name: GestUser
+#==========================================================
+#= PARAMETRI DB MONGODB 
+#==========================================================
+  data:
+    mongodb:
+      authentication-database: admin
+      database: park-users
+      host: localhost
+      password: foxmulder
+      port: 37017
+      username: bernie
+      auto-index-creation: true
+
+      
