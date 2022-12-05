@@ -61,9 +61,6 @@ public class Cliente implements Serializable {
 	@Column(name = "nazionalita")
     private String nazionalita;
     
-	@Column(name = "scadenza_certificato")
-    private Date scadenzaCertificato;
-    
 	@Column(name = "indirizzo")
     private String indirizzo;
     
@@ -77,8 +74,8 @@ public class Cliente implements Serializable {
 	@JsonBackReference(value = "cliente")
 	private List<Prenotazione> prenotazione = new ArrayList<>();
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
-	@JsonBackReference(value = "cliente")
-	private List<Prenotazione> tessera = new ArrayList<>();
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "clienteTess")
+	@JsonBackReference(value = "tessera")
+	private List<Tesseramento> tessera = new ArrayList<>();
     
 }

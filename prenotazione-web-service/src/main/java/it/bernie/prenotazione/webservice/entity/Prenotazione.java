@@ -33,7 +33,6 @@ import lombok.Data;
 @Entity
 @Table(name = "prenotazione")
 @Data
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Prenotazione implements Serializable {
 	
 	private static final long serialVersionUID = 2197198571851984984L;

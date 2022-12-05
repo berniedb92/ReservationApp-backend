@@ -172,7 +172,7 @@ public class ClienteController {
     	servCliente.insCliente(cliente);
         
     	return new ResponseEntity<InfoMsg>(new InfoMsg(LocalDate.now(),
-    			"Cliente inserito con successo!!"), HttpStatus.CREATED);
+    			"Cliente modificato con successo!!"), HttpStatus.CREATED);
         
     }
     

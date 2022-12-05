@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,6 +19,7 @@ import lombok.Data;
 public class Tesseramento {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "codice_tessera")
 	private Integer codiceTessera;
 	
@@ -33,6 +36,9 @@ public class Tesseramento {
 	
 	@ManyToOne
 	@JoinColumn(name = "cliente", referencedColumnName = "id")
-	private Cliente cliente;
+	private Cliente clienteTess;
+	
+	@Column(name = "scadenza_certificato")
+    private Date scadenzaCertificato;
 	
 }
