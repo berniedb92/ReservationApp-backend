@@ -1,0 +1,2 @@
+/.metadata/
+/prenotazione-web-service/target/

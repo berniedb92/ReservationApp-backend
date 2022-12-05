@@ -9,16 +9,21 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -53,6 +58,9 @@ public class Prenotazione implements Serializable {
     
 	@Column(name = "modalita")
     private String modalita;
+	
+	@Column(name ="codice_prenotazione")
+	private int codicePrenotazione;
     
 	@ManyToOne
 	@JoinColumn(name = "cliente", referencedColumnName = "id")
@@ -62,4 +70,14 @@ public class Prenotazione implements Serializable {
 	@JoinColumn(name = "campo", referencedColumnName = "numero")
     private Campo campo;
     
+
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "codicePrenotazione")
+	@JsonBackReference
+	private Set<DettagliPrenotazione> codicePrenotazioni  =new HashSet<>();
+	
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "cliente")
+	@JsonBackReference
+	private Set<DettagliPrenotazione> dettCliente  =new HashSet<>();
+	
+   
 }
