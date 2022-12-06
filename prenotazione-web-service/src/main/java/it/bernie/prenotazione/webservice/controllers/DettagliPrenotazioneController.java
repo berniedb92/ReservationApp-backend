@@ -144,6 +144,40 @@ public class DettagliPrenotazioneController {
 		}
 
 	}
+	@SneakyThrows
+	@PostMapping(value = "/dett-pre/modifica")
+	public ResponseEntity<InfoMsg> modificaDettaglioPrenotazione(
+			@Valid @RequestBody DettagliPrenotazione dettagliPrenotazione, BindingResult bindingResult) {
+
+		log.info("**** Inserimento dettagli prenotazione ****");
+
+		if (bindingResult.hasErrors()) {
+
+			String errMsg = errMessage.getMessage(bindingResult.getFieldError(), LocaleContextHolder.getLocale());
+
+			log.warning(errMsg);
+
+			throw new BindingException(errMsg);
+		}
+
+		DettagliPrenotazione dett = dettagliPrenotazioneService.selectPrenotazioneByCodPrenotazioneAndIdCliente(dettagliPrenotazione.getCodicePrenotazione().getCodicePrenotazione(),dettagliPrenotazione.getCodicePrenotazione().getCliente().getTessera().getCodiceTessera());
+
+		if (dett !=null) {
+
+			String errMsg = String.format("Codice Prenotazione %s gia presente nella lista dettagli",
+					dettagliPrenotazione.getCodicePrenotazione().getCodicePrenotazione());
+
+			log.warning(errMsg);
+
+			throw new DuplicateException(errMsg);
+
+		} else {
+
+			return new ResponseEntity<InfoMsg>(
+					new InfoMsg(LocalDate.now(), "Modifica dettaglio avvenuto con successo"), HttpStatus.CREATED);
+		}
+
+	}
 	
 	
 	@SneakyThrows

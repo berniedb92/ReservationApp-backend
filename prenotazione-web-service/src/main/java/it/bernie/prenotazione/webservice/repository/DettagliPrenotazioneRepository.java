@@ -13,7 +13,7 @@ public interface DettagliPrenotazioneRepository extends JpaRepository<DettagliPr
 	public List<DettagliPrenotazione> selByCodicePrenotazione(@Param("codPre") Integer codPre);
 
 
-	@Query(value = "SELECT * FROM dettagli_prenotazione WHERE codice_prenotazione =:codPre AND cliente =:cliente", nativeQuery = true)
+	@Query(value = "SELECT * FROM dettagli_prenotazione WHERE codice_prenotazione =:codPre AND codice_prenotazione =:cliente", nativeQuery = true)
 	public DettagliPrenotazione selByCodicePrenotazioneAndCliente(@Param("codPre") Integer codPre,
 			@Param("cliente") Integer cliente);
 
