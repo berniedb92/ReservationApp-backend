@@ -70,7 +70,18 @@ public class Prenotazione implements Serializable {
 	@JoinColumn(name = "campo", referencedColumnName = "numero")
     private Campo campo;
     
-
+	@Column(name = "giocatore1")
+    private String giocatore1;
+	
+	@Column(name = "giocatore2")
+    private String giocatore2;
+	
+	@Column(name = "giocatore3")
+    private String giocatore3;
+	
+	@Column(name = "giocatore4")
+    private String giocatore4;
+	
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "codicePrenotazione")
 	@JsonBackReference
 	private Set<DettagliPrenotazione> codicePrenotazioni  =new HashSet<>();

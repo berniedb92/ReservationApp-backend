@@ -33,17 +33,12 @@ public class Tesseramento {
 	@ManyToOne
 	@JoinColumn(name = "integrazione_tessera", referencedColumnName = "id")
 	private IntegrazioneTessera integrazione;
-	
     
 	@Column(name = "scadenza_certificato")
     private Date scadenzaCertificato;
-    
 	
 	@ManyToOne
 	@JoinColumn(name = "cliente", referencedColumnName = "id")
 	private Cliente clienteTess;
-	
-	@Column(name = "scadenza_certificato")
-    private Date scadenzaCertificato;
 	
 }

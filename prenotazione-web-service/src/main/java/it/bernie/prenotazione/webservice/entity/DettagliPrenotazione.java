@@ -26,7 +26,6 @@ public class DettagliPrenotazione {
 	@Column(name = "id_dettaglio")
 	private Integer idDettaglio;
 	
-	
 	@ManyToOne
 	@JoinColumn(name = "codice_prenotazione", referencedColumnName = "codice_prenotazione")
 	 private Prenotazione codicePrenotazione;
@@ -34,7 +33,6 @@ public class DettagliPrenotazione {
 	@ManyToOne
 	@JoinColumn(name="cliente", referencedColumnName = "cliente")
 	private Prenotazione cliente;
-	
 	
 	@Column(name="pagamento")
 	private float pagamento;
