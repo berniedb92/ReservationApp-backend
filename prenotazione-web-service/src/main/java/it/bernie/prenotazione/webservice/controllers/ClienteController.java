@@ -36,6 +36,7 @@ import it.bernie.prenotazione.webservice.exceptions.NotFoundException;
 import it.bernie.prenotazione.webservice.services.CampoService;
 import it.bernie.prenotazione.webservice.services.ClienteService;
 import it.bernie.prenotazione.webservice.utility.UtilityCalcolo;
+import it.bernie.prenotazione.webservice.utility.UtilityControllo;
 import lombok.SneakyThrows;
 
 /**
@@ -55,6 +56,9 @@ public class ClienteController {
     
     @Autowired
     UtilityCalcolo calcolo;
+    
+    @Autowired
+    UtilityControllo controllo;
     
     @GetMapping(path = "/list-clienti")
     @SneakyThrows
@@ -187,6 +191,24 @@ public class ClienteController {
         if(clienti.isEmpty()) {
         	
         	throw new NotFoundException("Nessun compleanno nella giornata di oggi!!");
+        	
+        }
+        
+        return new ResponseEntity<List<Cliente>>(clientiComplex, HttpStatus.OK);
+        
+    }
+    
+    @GetMapping(path = "/list-clienti-notessera")
+    @SneakyThrows
+    private ResponseEntity<List<Cliente>> actionLoadClientiNoTessera() {
+        
+        List<Cliente> clienti =  servCliente.selTutti();
+        
+        List<Cliente> clientiComplex = controllo.clientiNonTesserati(clienti);
+        
+        if(clienti.isEmpty()) {
+        	
+        	throw new NotFoundException("Nessun cliente senza tessera!!");
         	
         }
         
