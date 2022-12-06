@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -46,16 +47,16 @@ public class Tesseramento implements Serializable {
 	@JoinColumn(name = "integrazione_tessera", referencedColumnName = "id")
 	private IntegrazioneTessera integrazione;
 
-    @ManyToOne
+    @OneToOne
 	@JoinColumn(name = "cliente", referencedColumnName = "id")
 	private Cliente clienteTess;
 	
 	@Column(name = "scadenza_certificato")
     private Date scadenzaCertificato;
 	
-	
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "cliente")
-	@JsonBackReference
-	private Set<DettagliPrenotazione> dettCliente  =new HashSet<>();
-	
+//	
+//	@OneToMany(fetch = FetchType.LAZY,mappedBy = "cliente")
+//	@JsonBackReference
+//	private Set<DettagliPrenotazione> dettCliente  =new HashSet<>();
+//	
 }

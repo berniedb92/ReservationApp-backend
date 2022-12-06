@@ -20,6 +20,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -74,8 +75,8 @@ public class Cliente implements Serializable {
 	@JsonBackReference(value = "cliente")
 	private List<Prenotazione> prenotazione = new ArrayList<>();
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "clienteTess")
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "clienteTess")
 	@JsonBackReference(value = "tessera")
-	private List<Tesseramento> tessera = new ArrayList<>();
+	private Tesseramento tessera ;
     
 }

@@ -35,10 +35,10 @@ public class DettagliPrenotazione implements Serializable {
 	@JoinColumn(name = "codice_prenotazione", referencedColumnName = "codice_prenotazione")
 	 private Prenotazione codicePrenotazione;
 	
-	@ManyToOne
-	@JoinColumn(name="cliente", referencedColumnName = "cliente")
-	private Tesseramento cliente;
-	
+//	@ManyToOne
+//	@JoinColumn(name="cliente", referencedColumnName = "cliente")
+//	private Tesseramento cliente;
+//	
 	
 	@Column(name="pagamento")
 	private float pagamento;
