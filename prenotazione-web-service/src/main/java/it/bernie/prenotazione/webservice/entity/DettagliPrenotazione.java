@@ -1,5 +1,6 @@
 package it.bernie.prenotazione.webservice.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -19,7 +20,10 @@ import lombok.Data;
 @Entity
 @Table(name = "dettagli_prenotazione")
 @Data
-public class DettagliPrenotazione {
+public class DettagliPrenotazione implements Serializable {
+
+	private static final long serialVersionUID = 7630555811128299657L;
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +37,7 @@ public class DettagliPrenotazione {
 	
 	@ManyToOne
 	@JoinColumn(name="cliente", referencedColumnName = "cliente")
-	private Prenotazione cliente;
+	private Tesseramento cliente;
 	
 	
 	@Column(name="pagamento")
