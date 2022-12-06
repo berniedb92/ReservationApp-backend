@@ -34,7 +34,7 @@ public class IntegrazioneTessera {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "integrazione")
 	@JsonBackReference
-	private Set<Tesseramento> tesseramento  =new HashSet<>();
+	private Set<Tesseramento> tesseramento = new HashSet<>();
 	
 	
 }

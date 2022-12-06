@@ -23,6 +23,9 @@ public class TipoTessera {
 	@Id
 	@Column(name = "id")
 	private Integer id;
+	
+	@Column(name = "quota_associativa")
+	private Integer quotaAssociativa;
 		
 	@Column(name = "tipo")
 	private String tipo;
@@ -32,6 +35,6 @@ public class TipoTessera {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tipo")
 	@JsonBackReference
-	private Set<Tesseramento> tesseramento  =new HashSet<>();
+	private Set<Tesseramento> tesseramento = new HashSet<>();
 	
 }
