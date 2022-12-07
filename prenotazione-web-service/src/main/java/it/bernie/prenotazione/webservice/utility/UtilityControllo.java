@@ -86,7 +86,7 @@ public class UtilityControllo {
 
 		Prenotazione pre = servPre.selByCodicePrenot(prenotazione.getCodicePrenotazione());
 
-		if(pre == null) {
+		if(pre != null) {
 			String ErrMsg  = String.format("Tramite seguente codice prenotazione: %s non abbiamo ottenuto nessuna prenotazione",prenotazione.getCodicePrenotazione());
 
 			log.warning(ErrMsg);
@@ -94,22 +94,29 @@ public class UtilityControllo {
 			throw new NotFoundException(ErrMsg);
 		}
 
-		if(pre.getGiocatore1()!= null) {
+		if(prenotazione.getGiocatore1()!= null) {
 
-			giocatori.add(pre.getGiocatore1());
+			giocatori.add(prenotazione.getGiocatore1());
 
-		}else if(pre.getGiocatore2()!=null) {
-
-			giocatori.add(pre.getGiocatore2());
-
-		}else if(pre.getGiocatore3()!=null) {
-
-			giocatori.add(pre.getGiocatore3());
-
-		}else if (pre.getGiocatore4()!=null) {
-
-			giocatori.add(pre.getGiocatore4());
 		}
+		
+		if(prenotazione.getGiocatore2()!=null) {
+
+			giocatori.add(prenotazione.getGiocatore2());
+
+		}
+		
+		if(prenotazione.getGiocatore3()!=null) {
+
+			giocatori.add(prenotazione.getGiocatore3());
+
+		}
+		
+		if (prenotazione.getGiocatore4()!=null) {
+
+			giocatori.add(prenotazione.getGiocatore4());
+		}
+		
 		int y = 0;
 		
 		for (int i = 0; i <giocatori.size();i++) {

@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import it.bernie.prenotazione.webservice.entity.DettagliPrenotazione;
 
 public interface DettagliPrenotazioneRepository extends JpaRepository<DettagliPrenotazione, Integer> {
-	@Query(value = "SELECT * FROM dettagli_prenotazione WHERE codice_prenotazione =:codPre", nativeQuery = true)
+	@Query(value = "SELECT * FROM dettagli_prenotazione WHERE codice =:codPre", nativeQuery = true)
 	public List<DettagliPrenotazione> selByCodicePrenotazione(@Param("codPre") Integer codPre);
 
 

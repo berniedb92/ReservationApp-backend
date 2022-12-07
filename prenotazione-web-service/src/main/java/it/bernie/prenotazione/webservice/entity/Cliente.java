@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,9 +22,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -75,8 +78,9 @@ public class Cliente implements Serializable {
 	@JsonBackReference(value = "cliente")
 	private List<Prenotazione> prenotazione = new ArrayList<>();
 	
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "clienteTess")
-	@JsonBackReference(value = "tessera")
+	@OneToOne
+	@PrimaryKeyJoinColumn
+	@JsonIgnore
 	private Tesseramento tessera ;
     
 }

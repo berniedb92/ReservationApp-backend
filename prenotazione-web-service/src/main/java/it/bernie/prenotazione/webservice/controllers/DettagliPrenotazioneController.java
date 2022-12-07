@@ -160,7 +160,7 @@ public class DettagliPrenotazioneController {
 			throw new BindingException(errMsg);
 		}
 
-		DettagliPrenotazione dett = dettagliPrenotazioneService.selectPrenotazioneByCodPrenotazioneAndIdCliente(dettagliPrenotazione.getCodicePrenotazione().getCodicePrenotazione(),dettagliPrenotazione.getCodicePrenotazione().getCliente().getTessera().getCodiceTessera());
+		DettagliPrenotazione dett = dettagliPrenotazioneService.selectPrenotazioneByCodPrenotazioneAndIdCliente(0, 0);
 
 		if (dett !=null) {
 

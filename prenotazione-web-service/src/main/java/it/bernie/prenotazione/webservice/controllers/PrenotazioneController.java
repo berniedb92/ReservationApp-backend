@@ -68,7 +68,7 @@ public class PrenotazioneController {
 			throw new DuplicateException("Errore prenotazione gia nel sistema");
 		}
 		
-          List<Integer> prenotati = controllo.controlloGiocatoriPrenotazione(checkPrenotazione);
+          List<Integer> prenotati = controllo.controlloGiocatoriPrenotazione(prenotazione);
 		
 		  servPren.insPrenotazione(prenotazione);
   
@@ -77,6 +77,8 @@ public class PrenotazioneController {
 			 Tesseramento tess = servTess.selByCodiceTessera(prenotati.get(i));
 			 
 			  DettagliPrenotazione dettPre = new DettagliPrenotazione(prenotazione, tess, 0, false);
+			 
+			 
 			  
 			   dettagliRepositoryService.save(dettPre);
 	  }

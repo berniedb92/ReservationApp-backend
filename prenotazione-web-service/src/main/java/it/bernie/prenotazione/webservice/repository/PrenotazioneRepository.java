@@ -16,6 +16,6 @@ public interface PrenotazioneRepository extends JpaRepository<Prenotazione, Inte
 	public List<Prenotazione> selByData(@Param("data") String data);
 
 	
-	@Query(value ="SELECT * FROM prenotazione WHERE codice_prenotazione :codPre",nativeQuery = true)
+	@Query(value ="SELECT * FROM prenotazione WHERE codice_prenotazione =:codPre",nativeQuery = true)
 	public Prenotazione selByCodicePrenotazione(@Param("codPre") Integer codPrenotazione);
 }

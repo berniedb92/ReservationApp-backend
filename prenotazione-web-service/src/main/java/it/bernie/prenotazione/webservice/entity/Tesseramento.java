@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,9 +16,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -47,16 +50,16 @@ public class Tesseramento implements Serializable {
 	@JoinColumn(name = "integrazione_tessera", referencedColumnName = "id")
 	private IntegrazioneTessera integrazione;
 
-    @OneToOne
-	@JoinColumn(name = "cliente", referencedColumnName = "id")
+
+	@OneToOne(mappedBy = "tessera", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Cliente clienteTess;
 	
 	@Column(name = "scadenza_certificato")
     private Date scadenzaCertificato;
 	
-//	
-//	@OneToMany(fetch = FetchType.LAZY,mappedBy = "cliente")
-//	@JsonBackReference
-//	private Set<DettagliPrenotazione> dettCliente  =new HashSet<>();
-//	
+	
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "cliente")
+	@JsonBackReference
+	private Set<DettagliPrenotazione> dettCliente  =new HashSet<>();
+	
 }
