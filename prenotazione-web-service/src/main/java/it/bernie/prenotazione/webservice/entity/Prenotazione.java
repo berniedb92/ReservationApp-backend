@@ -71,16 +71,16 @@ public class Prenotazione implements Serializable {
     private Campo campo;
     
 	@Column(name = "giocatore1")
-    private String giocatore1;
+    private Integer giocatore1;
 	
 	@Column(name = "giocatore2")
-    private String giocatore2;
+    private Integer giocatore2;
 	
 	@Column(name = "giocatore3")
-    private String giocatore3;
+    private Integer giocatore3;
 	
 	@Column(name = "giocatore4")
-    private String giocatore4;
+    private Integer giocatore4;
 	
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "codicePrenotazione")
 	@JsonBackReference

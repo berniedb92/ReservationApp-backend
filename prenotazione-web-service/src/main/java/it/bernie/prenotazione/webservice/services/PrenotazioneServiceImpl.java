@@ -51,4 +51,10 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
 		return p;
 	}
 
+	@Override
+	public Prenotazione selByCodicePrenot(Integer codPre) {
+		
+		return repoPren.selByCodicePrenotazione(codPre);
+	}
+
 }

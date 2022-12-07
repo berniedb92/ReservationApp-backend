@@ -20,8 +20,10 @@ import lombok.Data;
 @Entity
 @Table(name = "dettagli_prenotazione")
 @Data
-public class DettagliPrenotazione implements Serializable {
 
+public class DettagliPrenotazione implements Serializable {
+ 
+	
 	private static final long serialVersionUID = 7630555811128299657L;
 
 
@@ -35,10 +37,10 @@ public class DettagliPrenotazione implements Serializable {
 	@JoinColumn(name = "codice_prenotazione", referencedColumnName = "codice_prenotazione")
 	 private Prenotazione codicePrenotazione;
 	
-//	@ManyToOne
-//	@JoinColumn(name="cliente", referencedColumnName = "cliente")
-//	private Tesseramento cliente;
-//	
+	@ManyToOne
+	@JoinColumn(name="cliente", referencedColumnName = "cliente")
+	private Tesseramento cliente;
+	
 	
 	@Column(name="pagamento")
 	private float pagamento;
@@ -49,4 +51,12 @@ public class DettagliPrenotazione implements Serializable {
 	@Column(name ="note")
 	private String note;
 	
+	
+	public DettagliPrenotazione(Prenotazione pre,Tesseramento cli,float pag, boolean pagEff) {
+	
+		this.codicePrenotazione = pre;
+		this.cliente = cli;
+		this.pagamento = pag;
+		this.pagamentoEffettutato = pagEff;
+	}
 }
