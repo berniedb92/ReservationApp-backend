@@ -79,10 +79,10 @@ public class UtilityControllo {
 	
 	
 	@SneakyThrows
-	public List<Integer> controlloGiocatoriPrenotazione(Prenotazione prenotazione) {
+	public List<Tesseramento> controlloGiocatoriPrenotazione(Prenotazione prenotazione) {
 		log.info("Controllo giocatori prenotazione");
 
-		List<Integer> giocatori = new ArrayList<>();
+		List<Tesseramento> giocatori = new ArrayList<>();
 
 		Prenotazione pre = servPre.selByCodicePrenot(prenotazione.getCodicePrenotazione());
 
@@ -122,7 +122,7 @@ public class UtilityControllo {
 		for (int i = 0; i <giocatori.size();i++) {
 
 
-			for (y=1+1; y <giocatori.size();y++) {
+			for (y=i+1; y <giocatori.size();y++) {
 
 				if(giocatori.get(i).equals(giocatori.get(y)) ) {
 

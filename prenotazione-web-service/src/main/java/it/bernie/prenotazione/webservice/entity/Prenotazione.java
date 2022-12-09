@@ -63,24 +63,28 @@ public class Prenotazione implements Serializable {
 	private int codicePrenotazione;
     
 	@ManyToOne
-	@JoinColumn(name = "cliente", referencedColumnName = "id")
-    private Cliente cliente;
-    
-	@ManyToOne
 	@JoinColumn(name = "campo", referencedColumnName = "numero")
     private Campo campo;
     
-	@Column(name = "giocatore1")
-    private Integer giocatore1;
+	@ManyToOne
+	@JoinColumn(name = "giocatore1", referencedColumnName = "codice_tessera")
+	//@Column(name = "giocatore1")
+    private Tesseramento giocatore1;
 	
-	@Column(name = "giocatore2")
-    private Integer giocatore2;
+	@ManyToOne
+	@JoinColumn(name = "giocatore2", referencedColumnName = "codice_tessera")
+	//@Column(name = "giocatore2")
+    private Tesseramento giocatore2;
 	
-	@Column(name = "giocatore3")
-    private Integer giocatore3;
+	@ManyToOne
+	@JoinColumn(name = "giocatore3", referencedColumnName = "codice_tessera")
+	//@Column(name = "giocatore3")
+    private Tesseramento giocatore3;
 	
-	@Column(name = "giocatore4")
-    private Integer giocatore4;
+	@ManyToOne
+	@JoinColumn(name = "giocatore4", referencedColumnName = "codice_tessera")
+	//@Column(name = "giocatore4")
+    private Tesseramento giocatore4;
 	
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "codicePrenotazione")
 	@JsonBackReference

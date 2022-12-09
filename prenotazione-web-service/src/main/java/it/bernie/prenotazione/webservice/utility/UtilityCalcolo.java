@@ -1,7 +1,9 @@
 package it.bernie.prenotazione.webservice.utility;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +19,13 @@ public class UtilityCalcolo {
 		
 		List<Cliente> clientiComplex = new ArrayList<>();
 		
-		LocalDate dataOggi = LocalDate.now();
+		Date dataOggi = Date.from(Instant.now());
+		
 		
 		for(int i = 0; i < clienti.size(); i++) {
 			
-			if(clienti.get(i).getDataNascita().getMonthValue() == dataOggi.getMonthValue()) {
-				if(clienti.get(i).getDataNascita().getDayOfYear() == dataOggi.getDayOfYear()) {
+			if(clienti.get(i).getDataNascita().getMonth()== dataOggi.getMonth()) {
+				if(clienti.get(i).getDataNascita().getDay()== dataOggi.getDay()) {
 					clientiComplex.add(clienti.get(i));
 				}
 			}

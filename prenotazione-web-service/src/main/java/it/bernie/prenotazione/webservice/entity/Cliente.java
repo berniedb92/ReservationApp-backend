@@ -54,7 +54,7 @@ public class Cliente implements Serializable {
     private String cognome;
     
 	@Column(name = "data_nascita")
-    private LocalDate dataNascita;
+    private Date dataNascita;
     
 	@Column(name = "luogo_nascita")
     private String luogoNascita;
@@ -74,13 +74,13 @@ public class Cliente implements Serializable {
 	@Column(name = "num_telefono")
     private String numTelefono;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
-	@JsonBackReference(value = "cliente")
-	private List<Prenotazione> prenotazione = new ArrayList<>();
+//	@OneToOne
+//	@PrimaryKeyJoinColumn
+//	@JsonIgnore
+//	private Tesseramento tessera;
 	
-	@OneToOne
-	@PrimaryKeyJoinColumn
-	@JsonIgnore
-	private Tesseramento tessera ;
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "clienteTess")
+	@JsonBackReference
+	private Set<Tesseramento> tessera  =new HashSet<>();
     
 }

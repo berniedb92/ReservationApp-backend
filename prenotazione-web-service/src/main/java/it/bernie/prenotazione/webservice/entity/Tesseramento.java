@@ -50,16 +50,32 @@ public class Tesseramento implements Serializable {
 	@JoinColumn(name = "integrazione_tessera", referencedColumnName = "id")
 	private IntegrazioneTessera integrazione;
 
-
-	@OneToOne(mappedBy = "tessera", cascade = CascadeType.ALL, orphanRemoval = true)
+	//@OneToOne(mappedBy = "tessera", cascade = CascadeType.ALL, orphanRemoval = true)
+	@ManyToOne
+	@JoinColumn(name = "cliente", referencedColumnName = "id")
 	private Cliente clienteTess;
 	
 	@Column(name = "scadenza_certificato")
     private Date scadenzaCertificato;
 	
-	
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "cliente")
 	@JsonBackReference
 	private Set<DettagliPrenotazione> dettCliente  =new HashSet<>();
+	
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "giocatore1")
+	@JsonBackReference(value = "giocatore1")
+	private Set<Tesseramento> giocatore1  =new HashSet<>();
+	
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "giocatore2")
+	@JsonBackReference(value = "giocatore2")
+	private Set<Tesseramento> giocatore2  =new HashSet<>();
+	
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "giocatore3")
+	@JsonBackReference(value = "giocatore3")
+	private Set<Tesseramento> giocatore3  =new HashSet<>();
+	
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "giocatore4")
+	@JsonBackReference(value = "giocatore4")
+	private Set<Tesseramento> giocatore4  =new HashSet<>();
 	
 }

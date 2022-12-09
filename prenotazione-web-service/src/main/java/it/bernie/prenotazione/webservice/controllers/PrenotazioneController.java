@@ -35,7 +35,7 @@ import lombok.SneakyThrows;
 @RequestMapping("/api/reservation")
 public class PrenotazioneController {
 
-	@Autowired	
+	@Autowired
 	PrenotazioneService servPren;
 
 	@Autowired
@@ -49,10 +49,10 @@ public class PrenotazioneController {
 
 	@Autowired
 	DettagliPrenotazioneRepository dettagliRepositoryService;
-	
+
 	@Autowired
 	UtilityControllo controllo;
-	
+
 	@Autowired
 	TesseramentoService servTess;
 
@@ -62,31 +62,24 @@ public class PrenotazioneController {
 
 		Prenotazione checkPrenotazione = servPren.selById(prenotazione.getId());
 
-
-		if(checkPrenotazione != null) {
+		if (checkPrenotazione != null) {
 
 			throw new DuplicateException("Errore prenotazione gia nel sistema");
 		}
-		
-          List<Integer> prenotati = controllo.controlloGiocatoriPrenotazione(prenotazione);
-		
-		  servPren.insPrenotazione(prenotazione);
-  
-		  for(int i = 0; i< prenotati.size() ;i++) {
-			  
-			 Tesseramento tess = servTess.selByCodiceTessera(prenotati.get(i));
-			 
-			  DettagliPrenotazione dettPre = new DettagliPrenotazione(prenotazione, tess, 0, false);
-			 
-			 
-			  
-			   dettagliRepositoryService.save(dettPre);
-	  }
 
-          
-          
-		return new ResponseEntity<InfoMsg>(new InfoMsg(LocalDate.now(), 
-				"Prenotazione inserita con successo"), HttpStatus.CREATED);
+		List<Tesseramento> prenotati = controllo.controlloGiocatoriPrenotazione(prenotazione);
+
+		servPren.insPrenotazione(prenotazione);
+
+		for (int i = 0; i < prenotati.size(); i++) {
+
+			DettagliPrenotazione dettPre = new DettagliPrenotazione(prenotazione, prenotati.get(i), 0, false);
+
+			dettagliRepositoryService.save(dettPre);
+		}
+
+		return new ResponseEntity<InfoMsg>(new InfoMsg(LocalDate.now(), "Prenotazione inserita con successo"),
+				HttpStatus.CREATED);
 
 	}
 
