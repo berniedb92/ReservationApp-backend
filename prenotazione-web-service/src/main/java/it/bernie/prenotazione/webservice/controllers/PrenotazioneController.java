@@ -17,12 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.bernie.prenotazione.webservice.entity.DettagliPrenotazione;
 import it.bernie.prenotazione.webservice.entity.Prenotazione;
-import it.bernie.prenotazione.webservice.entity.Sport;
 import it.bernie.prenotazione.webservice.entity.Tesseramento;
 import it.bernie.prenotazione.webservice.exceptions.DuplicateException;
 import it.bernie.prenotazione.webservice.exceptions.InfoMsg;
 import it.bernie.prenotazione.webservice.repository.DettagliPrenotazioneRepository;
-import it.bernie.prenotazione.webservice.repository.SportRepository;
 import it.bernie.prenotazione.webservice.services.CampoService;
 import it.bernie.prenotazione.webservice.services.ClienteService;
 import it.bernie.prenotazione.webservice.services.DettagliPrenotazioneService;
@@ -43,9 +41,6 @@ public class PrenotazioneController {
 
 	@Autowired
 	ClienteService servCliente;
-
-	@Autowired
-	SportRepository repoSport;
 
 	@Autowired
 	DettagliPrenotazioneRepository dettagliRepositoryService;
@@ -104,17 +99,5 @@ public class PrenotazioneController {
 		return new ResponseEntity<List<Prenotazione>>(prenotazioni, HttpStatus.OK);
 
 	}
-
-	@GetMapping(value = "/sport")
-	public ResponseEntity<List<Sport>> actionSport() {
-
-		List<Sport> sport = repoSport.findAll();
-
-		return new ResponseEntity<List<Sport>>(sport, HttpStatus.OK);
-
-	}
 	
-	
-
-
 }
