@@ -35,8 +35,13 @@ public class CampoServiceImpl implements CampoService {
 		
 		repoCampo.delete(campo);
 		
-	}
 
 	
 
+}
+
+	@Override
+	public Campo selCampoById(Integer id) {
+		return repoCampo.selByIdCampo(id);
+	}
 }

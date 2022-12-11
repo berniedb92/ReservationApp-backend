@@ -16,5 +16,6 @@ public interface PrenotazioneService {
 	public Prenotazione selById(Integer id);
 	
 	public Prenotazione selByCodicePrenot(Integer codPre);
-
+	
+	public List<Prenotazione> selByDataPrenotazione(String data);
 }

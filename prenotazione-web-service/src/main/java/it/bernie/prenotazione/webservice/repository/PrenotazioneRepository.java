@@ -12,10 +12,13 @@ import it.bernie.prenotazione.webservice.entity.Prenotazione;
 
 public interface PrenotazioneRepository extends JpaRepository<Prenotazione, Integer> {
 	
-	@Query(value = "SELECT * FROM prenotazione WHERE data LIKE :data", nativeQuery = true)
+	@Query(value = "SELECT * FROM prenotazione WHERE data =:data", nativeQuery = true)
 	public List<Prenotazione> selByData(@Param("data") String data);
 
 	
 	@Query(value ="SELECT * FROM prenotazione WHERE codice_prenotazione =:codPre",nativeQuery = true)
 	public Prenotazione selByCodicePrenotazione(@Param("codPre") Integer codPrenotazione);
+	
+	@Query(value ="SELECT * FROM prenotazione WHERE data =:data",nativeQuery = true)
+	public List<Prenotazione> selPrenotazioniByData(@Param("data") String data);
 }

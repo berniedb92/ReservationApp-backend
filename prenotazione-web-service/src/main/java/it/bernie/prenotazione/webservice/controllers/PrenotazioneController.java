@@ -67,7 +67,11 @@ public class PrenotazioneController {
 			throw new DuplicateException("Errore prenotazione gia nel sistema");
 		}
 
+
 		List<Tesseramento> prenotati = controllo.controlloGiocatoriPrenotazione(prenotazione);
+      
+		 controllo.controlloDatePrenotazione(prenotazione);
+		
 
 		servPren.insPrenotazione(prenotazione);
 
@@ -109,5 +113,8 @@ public class PrenotazioneController {
 		return new ResponseEntity<List<Sport>>(sport, HttpStatus.OK);
 
 	}
+	
+	
+
 
 }

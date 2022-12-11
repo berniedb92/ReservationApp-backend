@@ -78,4 +78,8 @@ public class Tesseramento implements Serializable {
 	@JsonBackReference(value = "giocatore4")
 	private Set<Tesseramento> giocatore4  =new HashSet<>();
 	
+	
+	public Tesseramento() {
+		
+	}
 }

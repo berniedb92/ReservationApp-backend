@@ -6,8 +6,7 @@
 package it.bernie.prenotazione.webservice.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalTime;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,9 +23,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
 
@@ -59,6 +55,7 @@ public class Prenotazione implements Serializable {
 	@Column(name = "modalita")
     private String modalita;
 	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name ="codice_prenotazione")
 	private int codicePrenotazione;
     

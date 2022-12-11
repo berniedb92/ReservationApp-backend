@@ -19,6 +19,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 
@@ -34,17 +36,24 @@ public class Campo {
     
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonProperty
 	@Column(name = "numero")
-    private byte numero;
+   private Integer numero;
 	
 	@Column(name = "superficie")
+	@JsonProperty
     private String superficie;
     
 	@Column(name = "sport")
+	@JsonProperty
     private String sport;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "campo")
-	@JsonBackReference(value = "campoo")
+	@JsonBackReference(value = "campo")
 	private Set<Prenotazione> prenotazione = new HashSet<>();
     
+	@JsonCreator
+	public Campo() {
+		
+	}
 }

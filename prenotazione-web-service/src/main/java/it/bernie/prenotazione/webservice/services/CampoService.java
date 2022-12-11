@@ -11,5 +11,7 @@ public interface CampoService {
 	public void insCampo(Campo campo);
 	
 	public void delCampo(Campo campo);
+	
+	public Campo selCampoById(Integer id);
 
 }

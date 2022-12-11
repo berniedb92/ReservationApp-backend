@@ -57,4 +57,10 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
 		return repoPren.selByCodicePrenotazione(codPre);
 	}
 
+	@Override
+	public List<Prenotazione> selByDataPrenotazione(String data) {
+	
+		return repoPren.selPrenotazioniByData(data);
+	}
+
 }
