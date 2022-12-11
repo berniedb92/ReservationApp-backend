@@ -1,23 +1,18 @@
 package it.bernie.prenotazione.webservice.utility;
 
 import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
+import java.text.SimpleDateFormat;
+
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import it.bernie.prenotazione.webservice.entity.Cliente;
-import it.bernie.prenotazione.webservice.entity.DettagliPrenotazione;
 import it.bernie.prenotazione.webservice.entity.Prenotazione;
 import it.bernie.prenotazione.webservice.entity.Tesseramento;
 import it.bernie.prenotazione.webservice.exceptions.DuplicateException;
 import it.bernie.prenotazione.webservice.exceptions.NotFoundException;
-import it.bernie.prenotazione.webservice.repository.DettagliPrenotazioneRepository;
 import it.bernie.prenotazione.webservice.services.ClienteService;
 import it.bernie.prenotazione.webservice.services.DettagliPrenotazioneService;
 import it.bernie.prenotazione.webservice.services.PrenotazioneService;
@@ -172,7 +167,7 @@ public class UtilityControllo {
 		for (int i = 0; i < listPre.size(); i++) {
 
 			String oraInizio = df2.format(listPre.get(i).getOraInizio());
-			if (oraInizio.equals(df3.format(prenotazione.getOraInizio()))) {
+			if (oraInizio.equals(df3.format(prenotazione.getOraInizio())) && listPre.get(i).getCampo().getNumero() == prenotazione.getCampo().getNumero()) {
 
 				String errMsg = String.format(
 						"Impossibile prenotare perche l'orario delle:%s scelto ha gia una prenotazione",
