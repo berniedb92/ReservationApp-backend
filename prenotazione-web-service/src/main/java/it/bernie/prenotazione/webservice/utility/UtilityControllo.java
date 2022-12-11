@@ -172,7 +172,7 @@ public class UtilityControllo {
 		for (int i = 0; i < listPre.size(); i++) {
 
 			String oraInizio = df2.format(listPre.get(i).getOraInizio());
-			if (oraInizio.equals(df3.format(prenotazione.getOraInizio()))) {
+			if (oraInizio.equals(df3.format(prenotazione.getOraInizio())) && listPre.get(i).getCampo().getNumero() == prenotazione.getCampo().getNumero()) {
 
 				String errMsg = String.format(
 						"Impossibile prenotare perche l'orario delle:%s scelto ha gia una prenotazione",
