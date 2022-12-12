@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.bernie.prenotazione.webservice.entity.Tesseramento;
 import it.bernie.prenotazione.webservice.repository.TesseramentoRepository;
+import it.bernie.prenotazione.webservice.utility.UtilityCalcolo;
 
 @Service
 @Transactional(readOnly = true)
@@ -19,6 +20,9 @@ public class TesseramentoServiceImpl implements TesseramentoService {
 	
 	@Autowired
 	TesseramentoRepository repoTess;
+	
+	@Autowired
+	UtilityCalcolo calcolo;
 
 	@Override
 	public Tesseramento selByCodiceTessera(Integer codiceTessera) {
@@ -56,6 +60,8 @@ public class TesseramentoServiceImpl implements TesseramentoService {
 			t.setDataTesseramento(dataAttivazione);
 			LocalDate dataScadenza = LocalDate.of(dataAttivazione.getYear(), 12, 31);
 			t.setScadenzaTessera(dataScadenza);
+			t.setPagamento(calcolo.getQuotaTessera(t));
+			t.setPagata(false);
 			
 		}
 		

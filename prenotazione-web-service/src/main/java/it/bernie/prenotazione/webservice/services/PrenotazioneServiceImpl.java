@@ -22,6 +22,10 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
 	@Override
 	public void insPrenotazione(Prenotazione prenotazione) {
 		// TODO Auto-generated method stub
+		
+		if(prenotazione.getModalita() == null) {
+			prenotazione.setModalita("padel");
+		} 
 		repoPren.save(prenotazione);
 	}
 

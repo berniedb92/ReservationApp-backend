@@ -65,6 +65,15 @@ public class Tesseramento implements Serializable {
 	@Column(name = "attiva")
     private boolean attiva;
 	
+	@Column(name="pagamento")
+	private Integer pagamento;
+	
+	@Column(name = "note")
+    private String note;
+	
+	@Column(name = "pagata")
+    private boolean pagata;
+	
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "cliente")
 	@JsonBackReference
 	private Set<DettagliPrenotazione> dettCliente  =new HashSet<>();

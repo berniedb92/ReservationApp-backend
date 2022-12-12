@@ -26,6 +26,7 @@ import it.bernie.prenotazione.webservice.services.ClienteService;
 import it.bernie.prenotazione.webservice.services.DettagliPrenotazioneService;
 import it.bernie.prenotazione.webservice.services.PrenotazioneService;
 import it.bernie.prenotazione.webservice.services.TesseramentoService;
+import it.bernie.prenotazione.webservice.utility.UtilityCalcolo;
 import it.bernie.prenotazione.webservice.utility.UtilityControllo;
 import lombok.SneakyThrows;
 
@@ -47,6 +48,9 @@ public class PrenotazioneController {
 
 	@Autowired
 	UtilityControllo controllo;
+	
+	@Autowired
+	UtilityCalcolo calcolo;
 
 	@Autowired
 	TesseramentoService servTess;
@@ -72,7 +76,8 @@ public class PrenotazioneController {
 
 		for (int i = 0; i < prenotati.size(); i++) {
 
-			DettagliPrenotazione dettPre = new DettagliPrenotazione(prenotazione, prenotati.get(i), 0, false);
+			DettagliPrenotazione dettPre = new DettagliPrenotazione
+					(prenotazione, prenotati.get(i), calcolo.gestioneQuote(prenotati.get(i), prenotazione), false);
 
 			dettagliRepositoryService.save(dettPre);
 		}
