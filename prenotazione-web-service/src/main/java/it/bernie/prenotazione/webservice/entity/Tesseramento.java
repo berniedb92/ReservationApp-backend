@@ -41,7 +41,7 @@ public class Tesseramento implements Serializable {
 	private Integer codiceTessera;
 	
 	@Column(name = "data_tesseramento")
-	private Date dataTesseramento;
+	private LocalDate dataTesseramento;
 
 	@ManyToOne
 	@JoinColumn(name = "tipo_tessera", referencedColumnName = "id")
@@ -60,7 +60,7 @@ public class Tesseramento implements Serializable {
     private LocalDate scadenzaCertificato;
 	
 	@Column(name = "scadenza_tessera")
-    private Date scadenzaTessera;
+    private LocalDate scadenzaTessera;
 	
 	@Column(name = "attiva")
     private boolean attiva;
