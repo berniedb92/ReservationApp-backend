@@ -58,6 +58,12 @@ public class Tesseramento implements Serializable {
 	@Column(name = "scadenza_certificato")
     private Date scadenzaCertificato;
 	
+	@Column(name = "scadenza_tessera")
+    private Date scadenzaTessera;
+	
+	@Column(name = "attiva")
+    private boolean attiva;
+	
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "cliente")
 	@JsonBackReference
 	private Set<DettagliPrenotazione> dettCliente  =new HashSet<>();

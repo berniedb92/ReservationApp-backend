@@ -1,6 +1,9 @@
 package it.bernie.prenotazione.webservice.controllers;
 
+import java.net.http.HttpHeaders;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +14,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.bernie.prenotazione.webservice.entity.Cliente;
 import it.bernie.prenotazione.webservice.entity.IntegrazioneTessera;
 import it.bernie.prenotazione.webservice.entity.Tesseramento;
 import it.bernie.prenotazione.webservice.entity.TipoTessera;
+import it.bernie.prenotazione.webservice.exceptions.CheckingException;
 import it.bernie.prenotazione.webservice.exceptions.DuplicateException;
 import it.bernie.prenotazione.webservice.exceptions.InfoMsg;
 import it.bernie.prenotazione.webservice.exceptions.NotFoundException;
@@ -108,7 +113,7 @@ public class TesseramentoController {
     @SneakyThrows
     private ResponseEntity<InfoMsg> actionAddCliente(@RequestBody Tesseramento tesseramento) {
 		
-		log.info(String.format("porcodiii %s", tesseramento.getCodiceTessera()));
+		log.info(String.format("otteniamo codice %s", tesseramento.getCodiceTessera()));
     	
     	Tesseramento tesseraCheck = servTess.selByClienteId(tesseramento.getClienteTess().getId());
     	
@@ -120,10 +125,45 @@ public class TesseramentoController {
     	}
     	
     	servTess.insTessera(tesseramento);
+    	
+    	Date dataAtt = Date.from(Instant.now());
+    	
+    	if(tesseramento.getScadenzaCertificato() == null || !tesseramento.isAttiva() || tesseramento.getScadenzaCertificato().before(dataAtt)) {
+    		
+    		throw new CheckingException("impossibile attivare la tessera campi richiesti non validi!!");
+    		
+    	}
         
     	return new ResponseEntity<InfoMsg>(new InfoMsg(LocalDate.now(),
-    			"Cliente inserito con successo!!"), HttpStatus.CREATED);
+    			String.format("Tessera del cliente %s generata con successo!!", 
+    					tesseramento.getClienteTess().getCognome())), HttpStatus.CREATED);
         
     }
+	
+	@RequestMapping(value = "/modifica-tessera", method = RequestMethod.PUT)
+	@SneakyThrows
+	public ResponseEntity<InfoMsg> updateArt(@RequestBody Tesseramento tesseramento) {
+		
+		log.info("Modifichiamo il tesserato con codice " + tesseramento.getCodiceTessera());
+		Tesseramento checkTes = servTess.selByCodiceTessera(tesseramento.getCodiceTessera());
+		
+		if(checkTes == null) {
+			
+			String MsgErr = String.format("Tesserato %s non presente in anagrafica! "
+					+ "Impossibile utilizzare il metodo POST", tesseramento.getCodiceTessera());
+			
+			log.warning(MsgErr);
+			
+			throw new NotFoundException(MsgErr);
+			
+		}
+		
+		servTess.insTessera(tesseramento);
+		
+		return new ResponseEntity<InfoMsg>(new InfoMsg(LocalDate.now(),
+				String.format("Tessera del cliente %s modificata con successo!!", 
+    					tesseramento.getClienteTess().getCognome())), HttpStatus.CREATED);
+		
+	}
 
 }
