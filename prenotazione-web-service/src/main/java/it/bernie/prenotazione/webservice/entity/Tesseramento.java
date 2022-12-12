@@ -1,6 +1,7 @@
 package it.bernie.prenotazione.webservice.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -56,7 +57,7 @@ public class Tesseramento implements Serializable {
 	private Cliente clienteTess;
 	
 	@Column(name = "scadenza_certificato")
-    private Date scadenzaCertificato;
+    private LocalDate scadenzaCertificato;
 	
 	@Column(name = "scadenza_tessera")
     private Date scadenzaTessera;

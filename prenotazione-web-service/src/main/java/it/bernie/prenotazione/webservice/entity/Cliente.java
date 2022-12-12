@@ -54,7 +54,7 @@ public class Cliente implements Serializable {
     private String cognome;
     
 	@Column(name = "data_nascita")
-    private Date dataNascita;
+    private LocalDate dataNascita;
     
 	@Column(name = "luogo_nascita")
     private String luogoNascita;
