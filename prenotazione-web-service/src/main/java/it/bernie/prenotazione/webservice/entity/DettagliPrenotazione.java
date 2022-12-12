@@ -45,7 +45,7 @@ public class DettagliPrenotazione implements Serializable {
 	private float pagamento;
 	
 	@Column(name = "pagamento_effettuato")
-	private boolean pagamentoEffettutato;
+	private boolean pagamentoEffettuato;
 	
 	@Column(name ="note")
 	private String note;
@@ -55,7 +55,7 @@ public class DettagliPrenotazione implements Serializable {
 		this.codicePrenotazione = pre;
 		this.cliente = cli;
 		this.pagamento = pag;
-		this.pagamentoEffettutato = pagEff;
+		this.pagamentoEffettuato = pagEff;
 	}
 
 	public DettagliPrenotazione() {

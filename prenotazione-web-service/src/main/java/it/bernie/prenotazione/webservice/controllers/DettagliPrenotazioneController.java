@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -160,19 +161,21 @@ public class DettagliPrenotazioneController {
 			throw new BindingException(errMsg);
 		}
 
-		DettagliPrenotazione dett = dettagliPrenotazioneService.selectPrenotazioneByCodPrenotazioneAndIdCliente(0, 0);
+		DettagliPrenotazione dett = dettagliPrenotazioneService.selectPrenotazioneByCodPrenotazioneAndIdCliente(dettagliPrenotazione.getCodicePrenotazione().getCodicePrenotazione(), dettagliPrenotazione.getCliente().getCodiceTessera());
 
-		if (dett !=null) {
+		if (dett ==null) {
 
-			String errMsg = String.format("Codice Prenotazione %s gia presente nella lista dettagli",
+			String errMsg = String.format("Codice Prenotazione %s non presente nella lista dettagli",
 					dettagliPrenotazione.getCodicePrenotazione().getCodicePrenotazione());
 
 			log.warning(errMsg);
 
-			throw new DuplicateException(errMsg);
+			throw new NotFoundException(errMsg);
 
 		} else {
 
+			dettagliPrenotazioneService.insertDettaglioPrenotazione(dettagliPrenotazione);
+			
 			return new ResponseEntity<InfoMsg>(
 					new InfoMsg(LocalDate.now(), "Modifica dettaglio avvenuto con successo"), HttpStatus.CREATED);
 		}
