@@ -126,9 +126,9 @@ public class TesseramentoController {
     	
     	servTess.insTessera(tesseramento);
     	
-    	Date dataAtt = Date.from(Instant.now());
+    	LocalDate dataAtt = LocalDate.now();
     	
-    	if(tesseramento.getScadenzaCertificato() == null || !tesseramento.isAttiva() || tesseramento.getScadenzaCertificato().before(dataAtt)) {
+    	if(tesseramento.getScadenzaCertificato() == null || !tesseramento.isAttiva() || tesseramento.getScadenzaCertificato().isBefore(dataAtt)) {
     		
     		throw new CheckingException("impossibile attivare la tessera campi richiesti non validi!!");
     		

@@ -19,13 +19,13 @@ public class UtilityCalcolo {
 		
 		List<Cliente> clientiComplex = new ArrayList<>();
 		
-		Date dataOggi = Date.from(Instant.now());
+		LocalDate dataOggi = LocalDate.now();
 		
 		
 		for(int i = 0; i < clienti.size(); i++) {
 			
 			if(clienti.get(i).getDataNascita().getMonth()== dataOggi.getMonth()) {
-				if(clienti.get(i).getDataNascita().getDay()== dataOggi.getDay()) {
+				if(clienti.get(i).getDataNascita().getDayOfMonth()== dataOggi.getDayOfMonth()) {
 					clientiComplex.add(clienti.get(i));
 				}
 			}

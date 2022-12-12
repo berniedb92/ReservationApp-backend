@@ -1,6 +1,7 @@
 package it.bernie.prenotazione.webservice.services;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -42,9 +43,9 @@ public class TesseramentoServiceImpl implements TesseramentoService {
 	@Transactional
 	public void insTessera(Tesseramento t) {
 		
-		Date dataAttivazione = Date.from(Instant.now());
+		LocalDate dataAttivazione = LocalDate.now();
 
-		if(t.getScadenzaCertificato().before(dataAttivazione) || t.getScadenzaCertificato() == null) {
+		if(t.getScadenzaCertificato().isBefore(dataAttivazione) || t.getScadenzaCertificato() == null) {
 			
 			t.setAttiva(false);
 			t.setDataTesseramento(dataAttivazione);
@@ -53,10 +54,7 @@ public class TesseramentoServiceImpl implements TesseramentoService {
 			
 			t.setAttiva(true);
 			t.setDataTesseramento(dataAttivazione);
-			Date dataScadenza = Date.from(Instant.now());
-			dataScadenza.setDate(31);
-			dataScadenza.setMonth(11);
-			dataScadenza.setYear(dataAttivazione.getYear());
+			LocalDate dataScadenza = LocalDate.of(dataAttivazione.getYear(), 12, 31);
 			t.setScadenzaTessera(dataScadenza);
 			
 		}
