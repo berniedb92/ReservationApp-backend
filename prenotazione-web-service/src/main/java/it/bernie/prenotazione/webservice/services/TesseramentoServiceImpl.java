@@ -75,4 +75,12 @@ public class TesseramentoServiceImpl implements TesseramentoService {
 		return repoTess.selByCliente(id);
 	}
 
+	@Transactional
+	@Override
+	public void deleteTessera(Tesseramento t) {
+		
+		repoTess.delete(t);
+		
+	}
+
 }

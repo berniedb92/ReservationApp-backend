@@ -13,5 +13,7 @@ public interface TesseramentoService {
 	public List<Tesseramento> selTutti();
 	
 	public void insTessera(Tesseramento t);
+	
+	public void deleteTessera(Tesseramento t);
 
 }

@@ -11,7 +11,12 @@ package it.bernie.prenotazione.webservice;
  */
 public class ApplicationCostants {
     
-    public static final String KEY_DATABASE = "dbTennis";
+    public static final float SINGOLO_TENNIS_SUPER = 4.0f;
+    public static final float DOPPIO_TENNIS_SUPER = 3.0f;
+    public static final float PADEL_SUPER = 7.0f;
+    public static final float SINGOLO_TENNIS_BASE = 7.0f;
+    public static final float DOPPIO_TENNIS_BASE = 6.0f;
+    public static final float PADEL_BASE = 10.0f;
 
     private ApplicationCostants() {}
     

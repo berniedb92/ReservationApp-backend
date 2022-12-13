@@ -11,6 +11,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.bernie.prenotazione.webservice.ApplicationCostants;
 import it.bernie.prenotazione.webservice.entity.Cliente;
 import it.bernie.prenotazione.webservice.entity.Prenotazione;
 import it.bernie.prenotazione.webservice.entity.Tesseramento;
@@ -65,31 +66,31 @@ public class UtilityCalcolo {
 			if(split[0].contains("SUPER-TENNIS") && split[1].contains("BASE-PADEL")) {
 				
 				if(modalita.equalsIgnoreCase("singolo")) {
-					quota = 4.0f;
+					quota = ApplicationCostants.SINGOLO_TENNIS_SUPER;
 				} else if(modalita.equalsIgnoreCase("doppio")) {
-					quota = 3.0f;
+					quota = ApplicationCostants.DOPPIO_TENNIS_SUPER;
 				} else {
-					quota = 10.0f;
+					quota = ApplicationCostants.PADEL_BASE;
 				}
 				
 			} else if(split[0].contains("BASE-TENNIS") && split[1].contains("SUPER-PADEL")) {
 				
 				if(modalita.equalsIgnoreCase("singolo")) {
-					quota = 7.0f;
+					quota = ApplicationCostants.SINGOLO_TENNIS_BASE;
 				} else if(modalita.equalsIgnoreCase("doppio")) {
-					quota = 6.0f;
+					quota = ApplicationCostants.DOPPIO_TENNIS_BASE;
 				} else {
-					quota = 7.0f;
+					quota = ApplicationCostants.PADEL_SUPER;
 				}
 				
 			} else if(split[0].contains("SUPER-TENNIS") && split[1].contains("SUPER-PADEL")) {
 				
 				if(modalita.equalsIgnoreCase("singolo")) {
-					quota = 4.0f;
+					quota = ApplicationCostants.SINGOLO_TENNIS_SUPER;
 				} else if(modalita.equalsIgnoreCase("doppio")) {
-					quota = 3.0f;
+					quota = ApplicationCostants.DOPPIO_TENNIS_SUPER;
 				} else {
-					quota = 7.0f;
+					quota = ApplicationCostants.PADEL_SUPER;
 				}
 				
 			}
@@ -97,11 +98,11 @@ public class UtilityCalcolo {
 		} else {
 				
 			if(modalita.equalsIgnoreCase("singolo")) {
-				quota = 7.0f;
+				quota = ApplicationCostants.SINGOLO_TENNIS_BASE;
 			} else if(modalita.equalsIgnoreCase("doppio")) {
-				quota = 6.0f;
+				quota = ApplicationCostants.DOPPIO_TENNIS_BASE;
 			} else {
-				quota = 10.0f;
+				quota = ApplicationCostants.PADEL_BASE;
 			}
 			
 		}
@@ -110,11 +111,9 @@ public class UtilityCalcolo {
 		
 	}
 	
-	public Map<String, Float> panoramicaQuote(Tesseramento tesseramento, Prenotazione prenotazione) {
+	public Map<String, Float> panoramicaQuote(Tesseramento tesseramento) {
 		
 		Map<String, Float> quota = new HashMap<>();
-		
-		String modalita = prenotazione.getModalita();
 		
 		String tipoTessera = tesseramento.getTipo().getTipo();
 		
@@ -124,60 +123,38 @@ public class UtilityCalcolo {
 			
 			if(split[0].contains("SUPER-TENNIS") && split[1].contains("BASE-PADEL")) {
 				
-				if(tipoTessera.equals("Tennis") && modalita.equalsIgnoreCase("singolo")) {
-					quota.put("Singolo-Tennis",4.0f);
-				} 
-				if(tipoTessera.equals("Tennis") && modalita.equalsIgnoreCase("doppio")) {
-					quota.put("Doppio-Tennis",3.0f);
-				} 
+				quota.put("SingoloTennis",ApplicationCostants.SINGOLO_TENNIS_SUPER);
 				
-				if(tipoTessera.equals("Padel")) {
-					quota.put("Padel",10.0f);
-				}
-				
+				quota.put("DoppioTennis",ApplicationCostants.DOPPIO_TENNIS_SUPER);
+				 
+				quota.put("Padel",ApplicationCostants.PADEL_BASE);
+								
 			} else if(split[0].contains("BASE-TENNIS") && split[1].contains("SUPER-PADEL")) {
 				
-				if(tipoTessera.equals("Tennis") && modalita.equalsIgnoreCase("singolo")) {
-					quota.put("Singolo-Tennis",7.0f);
-				} 
+				quota.put("SingoloTennis",ApplicationCostants.SINGOLO_TENNIS_BASE);
 				
-				if(tipoTessera.equals("Tennis") && modalita.equalsIgnoreCase("doppio")) {
-					quota.put("Doppio-Tennis",6.0f);
-				} 
+				quota.put("DoppioTennis",ApplicationCostants.DOPPIO_TENNIS_BASE);
 				
-				if(tipoTessera.equals("Padel")) {
-					quota.put("Padel",7.0f);
-				}
-				
+				quota.put("Padel",ApplicationCostants.PADEL_SUPER);
+							
 			} else if(split[0].contains("SUPER-TENNIS") && split[1].contains("SUPER-PADEL")) {
 				
-				if(tipoTessera.equals("Tennis") && modalita.equalsIgnoreCase("singolo")) {
-					quota.put("Singolo-Tennis",4.0f);
-				} 
+		
+				quota.put("SingoloTennis",ApplicationCostants.SINGOLO_TENNIS_SUPER);
 				
-				if(tipoTessera.equals("Tennis") && modalita.equalsIgnoreCase("doppio")) {
-					quota.put("Doppio-Tennis",3.0f);
-				} 
+				quota.put("DoppioTennis",ApplicationCostants.DOPPIO_TENNIS_SUPER);
 				
-				if(tipoTessera.equals("Padel")) {
-					quota.put("Padel", 7.0f);
-				}
-				
+				quota.put("Padel", ApplicationCostants.PADEL_SUPER);
+							
 			}
 			
 		} else {
 				
-			if(tipoTessera.equals("Tennis") && modalita.equalsIgnoreCase("singolo")) {
-				quota.put("Singolo-Tennis",7.0f);
-			} 
+			quota.put("SingoloTennis",ApplicationCostants.SINGOLO_TENNIS_BASE);
+		
+			quota.put("DoppioTennis",ApplicationCostants.DOPPIO_TENNIS_BASE);
 			
-			if(tipoTessera.equals("Tennis") && modalita.equalsIgnoreCase("doppio")) {
-				quota.put("Doppio-Tennis",6.0f);
-			} 
-			
-			if(tipoTessera.equals("Padel")) {
-				quota.put("Padel",10.0f);
-			}
+			quota.put("Padel",ApplicationCostants.PADEL_BASE);		
 			
 		}
 		

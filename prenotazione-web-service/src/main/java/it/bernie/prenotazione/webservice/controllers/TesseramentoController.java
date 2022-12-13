@@ -5,6 +5,8 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import it.bernie.prenotazione.webservice.entity.Cliente;
 import it.bernie.prenotazione.webservice.entity.IntegrazioneTessera;
+import it.bernie.prenotazione.webservice.entity.Prenotazione;
 import it.bernie.prenotazione.webservice.entity.Tesseramento;
 import it.bernie.prenotazione.webservice.entity.TipoTessera;
 import it.bernie.prenotazione.webservice.exceptions.CheckingException;
@@ -27,7 +33,9 @@ import it.bernie.prenotazione.webservice.exceptions.InfoMsg;
 import it.bernie.prenotazione.webservice.exceptions.NotFoundException;
 import it.bernie.prenotazione.webservice.repository.IntegrazioneTesseraRepository;
 import it.bernie.prenotazione.webservice.repository.TipoTesseraRepository;
+import it.bernie.prenotazione.webservice.services.PrenotazioneService;
 import it.bernie.prenotazione.webservice.services.TesseramentoService;
+import it.bernie.prenotazione.webservice.utility.UtilityCalcolo;
 import lombok.SneakyThrows;
 import lombok.extern.java.Log;
 
@@ -45,9 +53,12 @@ public class TesseramentoController {
 	@Autowired
 	TipoTesseraRepository repoTipoTess;
 	
+	@Autowired
+	UtilityCalcolo calcolo;
+	
 	@GetMapping(path = "/list-tesseramenti")
     @SneakyThrows
-    private ResponseEntity<List<Tesseramento>> actionLoadClienti() {
+    private ResponseEntity<List<Tesseramento>> actionLoadTessere() {
         
         List<Tesseramento> tesseramenti = servTess.selTutti();
         
@@ -63,7 +74,7 @@ public class TesseramentoController {
 	
 	@GetMapping(path = "/list-tesseramenti-id/{codice}")
     @SneakyThrows
-    private ResponseEntity<Tesseramento> actionLoadClienti(@PathVariable(value = "codice") Integer codice) {
+    private ResponseEntity<Tesseramento> actionLoadTessera(@PathVariable(value = "codice") Integer codice) {
         
         Tesseramento tesseramento = servTess.selByCodiceTessera(codice);
         
@@ -111,7 +122,7 @@ public class TesseramentoController {
 	
 	@PostMapping(value = "/new-tessera")
     @SneakyThrows
-    private ResponseEntity<InfoMsg> actionAddCliente(@RequestBody Tesseramento tesseramento) {
+    private ResponseEntity<InfoMsg> actionAddTessera(@RequestBody Tesseramento tesseramento) {
 		
 		log.info(String.format("otteniamo codice %s", tesseramento.getCodiceTessera()));
     	
@@ -165,5 +176,69 @@ public class TesseramentoController {
     					tesseramento.getClienteTess().getCognome())), HttpStatus.CREATED);
 		
 	}
+	
+	@RequestMapping(path = "/remove-tessera/{codice}", method = RequestMethod.DELETE)
+    @SneakyThrows
+    public ResponseEntity<?> actionRemoveTessera(@PathVariable("codice") Integer codice) {
+        
+    	Tesseramento tessera = servTess.selByCodiceTessera(codice);
+        
+        if(tessera == null) {
+        	
+        	throw new NotFoundException("Nessun tessera trovata con il codice selezionato!!");
+        	
+        } 
+    	
+    	servTess.deleteTessera(tessera);
+    	
+    	ObjectMapper mapper = new ObjectMapper();
+		ObjectNode responseNode = mapper.createObjectNode();
+		
+		responseNode.put("code", HttpStatus.OK.toString());
+		responseNode.put("message", String.format("Eliminazione tessera %d eseguita Con Successo", codice));
+		
+		return new ResponseEntity<>(responseNode, HttpStatus.OK);
+        
+    }
+	
+	@GetMapping(path = "/quote-tessere/{codice}")
+    @SneakyThrows
+    private ResponseEntity<?> actionLoadQuoteTessera(@PathVariable(value = "codice") Integer codice) {
+        
+        Tesseramento tesseramento = servTess.selByCodiceTessera(codice);
+        
+        if(tesseramento == null) {
+        	
+        	throw new NotFoundException("Nessun cliente tesserato trovato!!");
+        	
+        }
+        
+        Map<String, Float> quota = calcolo.panoramicaQuote(tesseramento);
+        
+        String[] sport = new String[3];
+        Float[] prezzo = new Float[3];
+        
+        int i = 0;
+        for(Map.Entry<String, Float> p : quota.entrySet()){
+        	sport[i] = p.getKey();
+        	i++;
+        } 
+        
+        i=0;
+        for(Map.Entry<String, Float> p : quota.entrySet()){
+            prezzo[i] = p.getValue();
+            i++;
+        }
+        
+        ObjectMapper mapper = new ObjectMapper();
+		ObjectNode responseNode = mapper.createObjectNode();
+		
+		responseNode.put(sport[0], prezzo[0]);
+		responseNode.put(sport[1], prezzo[1]);
+		responseNode.put(sport[2], prezzo[2]);
+        
+        return new ResponseEntity<>(responseNode, HttpStatus.OK);
+        
+    }
 
 }
