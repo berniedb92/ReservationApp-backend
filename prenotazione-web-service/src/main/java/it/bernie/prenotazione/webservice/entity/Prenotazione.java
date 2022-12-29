@@ -83,6 +83,9 @@ public class Prenotazione implements Serializable {
 	//@Column(name = "giocatore4")
     private Tesseramento giocatore4;
 	
+	@Column(name = "evento")
+    private String evento;
+	
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "codicePrenotazione")
 	@JsonBackReference
 	private Set<DettagliPrenotazione> codicePrenotazioni  =new HashSet<>();

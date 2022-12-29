@@ -38,12 +38,14 @@ import it.bernie.prenotazione.webservice.services.ClienteService;
 import it.bernie.prenotazione.webservice.utility.UtilityCalcolo;
 import it.bernie.prenotazione.webservice.utility.UtilityControllo;
 import lombok.SneakyThrows;
+import lombok.extern.java.Log;
 
 /**
  *
  * @author berni
  */
 
+@Log
 @RestController
 @RequestMapping("/api/reservation")
 public class ClienteController {
@@ -66,9 +68,15 @@ public class ClienteController {
         
         List<Cliente> clienti =  servCliente.selTutti();
         
+        log.info("Carichiamo la lista dei clienti");
+        
         if(clienti.isEmpty()) {
         	
-        	throw new NotFoundException("Nessun cliente trovato!!");
+        	String errMsg = "Nessun cliente trovato!!";
+        	
+        	log.warning(errMsg);
+        	
+        	throw new NotFoundException(errMsg);
         	
         }
         
@@ -85,7 +93,11 @@ public class ClienteController {
         
         if(clienti.isEmpty()) {
         	
-        	throw new NotFoundException("Nessun cliente trovato!!");
+        	String errMsg = "Nessun cliente trovato!!";
+        	
+        	log.warning(errMsg);
+        	
+        	throw new NotFoundException(errMsg);
         	
         } else {
         	
@@ -95,7 +107,11 @@ public class ClienteController {
         
         if(cliente == null) {
         	
-        	throw new NotFoundException("Nessun cliente trovato!!");
+        	String errMsg = String.format("Il cliente con id %d non esiste!", id);
+        	
+        	log.warning(errMsg);
+        	
+        	throw new NotFoundException(errMsg);
         	
         }
         
@@ -109,10 +125,16 @@ public class ClienteController {
     	
     	Cliente clienteCheck = servCliente.selByCf(cliente.getCodiceFiscale());
     	
+    	log.info("**** Inserimento cliente ****");
+    	
     	if(clienteCheck != null) {
     		
-    		throw new DuplicateException(String.format
-    				("Cliente %s già presente in anagrafica!", cliente.getCodiceFiscale()));
+    		String errMsg = String.format
+    				("Cliente %s già presente in anagrafica!", cliente.getCodiceFiscale());
+    		
+    		log.warning(errMsg);
+    		
+    		throw new DuplicateException(errMsg);
     		
     	}
     	
@@ -131,8 +153,12 @@ public class ClienteController {
         Cliente cliente = null;
         
         if(clienti.isEmpty()) {
+
+            String errMsg = "Nessun cliente trovato!!";
+
+            log.warning(errMsg);
         	
-        	throw new NotFoundException("Nessun cliente trovato!!");
+        	throw new NotFoundException(errMsg);
         	
         } else {
         	
@@ -141,8 +167,12 @@ public class ClienteController {
         }
     	
     	if(cliente == null) {
+
+            String errMsg = String.format("Cliente %d non presente in anagrafica", id);
+
+            log.warning(errMsg);
     		
-    		throw new NotFoundException(String.format("Cliente %d non presente in anagrafica", id));
+    		throw new NotFoundException(errMsg);
     		
     	}
     	
@@ -167,9 +197,13 @@ public class ClienteController {
     	
     	if(clienteCheck == null) {
     		
-    		throw new DuplicateException(String.format
+    		String errMsg = String.format
     				("Cliente %s non presente in anagrafica! "
-    						+ "Impossibile effettuare la modifica!!", cliente.getCodiceFiscale()));
+    						+ "Impossibile effettuare la modifica!!", cliente.getCodiceFiscale());
+    		
+    		log.warning(errMsg);
+    		
+    		throw new DuplicateException(errMsg);
     		
     	}
     	
@@ -184,13 +218,27 @@ public class ClienteController {
     @SneakyThrows
     private ResponseEntity<List<Cliente>> actionLoadClientiComplex() {
         
-        List<Cliente> clienti =  servCliente.selTutti();
-        
+    	List<Cliente> clienti = servCliente.selTutti();
+    	
+    	if(clienti.isEmpty()) {
+        	
+        	String errMsg = "Nessun cliente trovato!!";
+        	
+        	log.warning(errMsg);
+        	
+        	throw new NotFoundException(errMsg);
+        	
+        }
+    	
         List<Cliente> clientiComplex = calcolo.compleanni(clienti);;
         
-        if(clienti.isEmpty()) {
+        if(clientiComplex.isEmpty()) {
         	
-        	throw new NotFoundException("Nessun compleanno nella giornata di oggi!!");
+        	String errMsg = "Nessun compleanno nella giornata di oggi!!";
+        	
+        	log.warning(errMsg);
+        	
+        	throw new NotFoundException(errMsg);
         	
         }
         
@@ -204,11 +252,25 @@ public class ClienteController {
         
         List<Cliente> clienti =  servCliente.selTutti();
         
+        if(clienti.isEmpty()) {
+        	
+        	String errMsg = "Nessun cliente trovato!!";
+        	
+        	log.warning(errMsg);
+        	
+        	throw new NotFoundException(errMsg);
+        	
+        }
+        
         List<Cliente> clientiComplex = controllo.clientiNonTesserati(clienti);
         
         if(clienti.isEmpty()) {
         	
-        	throw new NotFoundException("Nessun cliente senza tessera!!");
+        	String errMsg = "Nessun cliente senza tessera!!";
+        	
+        	log.warning(errMsg);
+        	
+        	throw new NotFoundException(errMsg);
         	
         }
         

@@ -16,7 +16,9 @@ import it.bernie.prenotazione.webservice.exceptions.NotFoundException;
 import it.bernie.prenotazione.webservice.services.CampoService;
 import it.bernie.prenotazione.webservice.services.ClienteService;
 import lombok.SneakyThrows;
+import lombok.extern.java.Log;
 
+@Log
 @RestController
 @RequestMapping("/api/reservation")
 public class CampoController {
@@ -27,12 +29,18 @@ public class CampoController {
     @GetMapping(path = "/list-campi")
     @SneakyThrows
     private ResponseEntity<List<Campo>> actionLoadClienti() {
+    	
+    	log.info("Carichiamo la lista dei campi");
         
         List<Campo> clienti =  servCampo.selTutti();
         
         if(clienti.isEmpty()) {
         	
-        	throw new NotFoundException("Nessun campo trovato!!");
+        	String errMsg = "Nessun campo trovato!!";
+        	
+        	log.warning(errMsg);
+        	
+        	throw new NotFoundException(errMsg);
         	
         }
         
@@ -46,9 +54,15 @@ public class CampoController {
         
         Campo campo =  servCampo.selCampoById(id);
         
+        log.info(String.format("Carichiamo il camnpo con id %d", id));
+        
         if(campo == null) {
         	
-        	throw new NotFoundException("Nessun campo trovato!!");
+        	String errMsg = String.format("Il campo con id %d non esiste", id);
+        	
+        	log.warning(errMsg);
+        	
+        	throw new NotFoundException(errMsg);
         	
         }
         

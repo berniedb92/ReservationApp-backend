@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+import it.bernie.prenotazione.webservice.exceptions.NotFoundException;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,19 +31,13 @@ import it.bernie.prenotazione.webservice.services.TesseramentoService;
 import it.bernie.prenotazione.webservice.utility.UtilityCalcolo;
 import it.bernie.prenotazione.webservice.utility.UtilityControllo;
 import lombok.SneakyThrows;
-
+@Log
 @RestController
 @RequestMapping("/api/reservation")
 public class PrenotazioneController {
 
 	@Autowired
 	PrenotazioneService servPren;
-
-	@Autowired
-	CampoService servCampo;
-
-	@Autowired
-	ClienteService servCliente;
 
 	@Autowired
 	DettagliPrenotazioneRepository dettagliRepositoryService;
@@ -51,9 +47,6 @@ public class PrenotazioneController {
 	
 	@Autowired
 	UtilityCalcolo calcolo;
-
-	@Autowired
-	TesseramentoService servTess;
 
 	@PostMapping(value = "/inserisci")
 	@SneakyThrows
@@ -87,19 +80,41 @@ public class PrenotazioneController {
 
 	}
 
+	@SneakyThrows
 	@GetMapping(value = "/list-pren")
 	public ResponseEntity<List<Prenotazione>> actionListPrenotazione() {
 
 		List<Prenotazione> prenotazioni = servPren.selTutte();
 
+		if(prenotazioni.isEmpty()) {
+
+			String errMsg = "Nessuna prenotazione trovata";
+
+			log.warning(errMsg);
+
+			throw new NotFoundException(errMsg);
+
+		}
+
 		return new ResponseEntity<List<Prenotazione>>(prenotazioni, HttpStatus.OK);
 
 	}
 
+	@SneakyThrows
 	@GetMapping(value = "/list-pren-date/{date}")
 	public ResponseEntity<List<Prenotazione>> actionListPrenotazioneDate(@PathVariable String date) {
 
 		List<Prenotazione> prenotazioni = servPren.selByData(date);
+
+		if(prenotazioni.isEmpty()) {
+
+			String errMsg = String.format("Nessuna prenotazione trovata per la data %s", date);
+
+			log.warning(errMsg);
+
+			throw new NotFoundException(errMsg);
+
+		}
 
 		return new ResponseEntity<List<Prenotazione>>(prenotazioni, HttpStatus.OK);
 
