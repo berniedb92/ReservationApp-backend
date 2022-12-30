@@ -52,6 +52,8 @@ public class PrenotazioneController {
 	@SneakyThrows
 	public ResponseEntity<InfoMsg> actionInsertPrenotazione(@RequestBody Prenotazione prenotazione) {
 
+		log.info("inseriamo la prenotazione");
+
 		Prenotazione checkPrenotazione = servPren.selById(prenotazione.getId());
 
 		if (checkPrenotazione != null) {
@@ -84,6 +86,8 @@ public class PrenotazioneController {
 	@GetMapping(value = "/list-pren")
 	public ResponseEntity<List<Prenotazione>> actionListPrenotazione() {
 
+		log.info("otteniamo tutte le prenotazioni");
+
 		List<Prenotazione> prenotazioni = servPren.selTutte();
 
 		if(prenotazioni.isEmpty()) {
@@ -104,11 +108,35 @@ public class PrenotazioneController {
 	@GetMapping(value = "/list-pren-date/{date}")
 	public ResponseEntity<List<Prenotazione>> actionListPrenotazioneDate(@PathVariable String date) {
 
+		log.info(String.format("otteniamo le prenotazioni nella giornata %s", date));
+
 		List<Prenotazione> prenotazioni = servPren.selByData(date);
 
 		if(prenotazioni.isEmpty()) {
 
 			String errMsg = String.format("Nessuna prenotazione trovata per la data %s", date);
+
+			log.warning(errMsg);
+
+			throw new NotFoundException(errMsg);
+
+		}
+
+		return new ResponseEntity<List<Prenotazione>>(prenotazioni, HttpStatus.OK);
+
+	}
+
+	@SneakyThrows
+	@GetMapping(value = "/list-pren-campo/{date}/{campo}")
+	public ResponseEntity<List<Prenotazione>> actionListPrenotazioneDate(@PathVariable String date, @PathVariable Integer campo) {
+
+		log.info(String.format("otteniamo le prenotazioni nella giornata %s del campo %d", date, campo));
+
+		List<Prenotazione> prenotazioni = servPren.selByDataAndCampo(date, campo);
+
+		if(prenotazioni.isEmpty()) {
+
+			String errMsg = String.format("Nessuna prenotazione trovata per la data %s nel campo %d", date, campo);
 
 			log.warning(errMsg);
 

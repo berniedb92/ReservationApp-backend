@@ -51,10 +51,10 @@ public class CampoController {
     @GetMapping(path = "/campo/{id}")
     @SneakyThrows
     private ResponseEntity<Campo> actionLoadCampoById(@PathVariable Integer id) {
+
+        log.info(String.format("Carichiamo il camnpo con id %d", id));
         
         Campo campo =  servCampo.selCampoById(id);
-        
-        log.info(String.format("Carichiamo il camnpo con id %d", id));
         
         if(campo == null) {
         	

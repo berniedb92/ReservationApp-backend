@@ -59,12 +59,18 @@ public class TesseramentoController {
 	@GetMapping(path = "/list-tesseramenti")
     @SneakyThrows
     private ResponseEntity<List<Tesseramento>> actionLoadTessere() {
+
+		log.info("Carichiamo tutti i tesserati");
         
         List<Tesseramento> tesseramenti = servTess.selTutti();
         
         if(tesseramenti.isEmpty()) {
+
+			String errMsg = "Nessun cliente tesserato trovato!!";
+
+			log.warning(errMsg);
         	
-        	throw new NotFoundException("Nessun cliente tesserato trovato!!");
+        	throw new NotFoundException(errMsg);
         	
         }
         
@@ -75,12 +81,18 @@ public class TesseramentoController {
 	@GetMapping(path = "/list-tesseramenti-id/{codice}")
     @SneakyThrows
     private ResponseEntity<Tesseramento> actionLoadTessera(@PathVariable(value = "codice") Integer codice) {
+
+		log.info(String.format("Carichiamo il tesserato con codice %d", codice));
         
         Tesseramento tesseramento = servTess.selByCodiceTessera(codice);
         
         if(tesseramento == null) {
+
+			String errMsg = String.format("Nessun cliente tesserato trovato con id %d!!", codice);
+
+			log.warning(errMsg);
         	
-        	throw new NotFoundException("Nessun cliente tesserato trovato!!");
+        	throw new NotFoundException(errMsg);
         	
         }
         
@@ -91,12 +103,18 @@ public class TesseramentoController {
 	@GetMapping(path = "/integrazione")
     @SneakyThrows
     private ResponseEntity<List<IntegrazioneTessera>> actionIntegrazioneTessera() {
+
+		log.info("Carichiamo integrazione tessere");
         
         List<IntegrazioneTessera> integrazione = repoInTess.findAll();
         
         if(integrazione.isEmpty()) {
+
+			String errMsg = "errore caricamento integrazione tessera!!";
+
+			log.warning(errMsg);
         	
-        	throw new NotFoundException("errore caricamento integrazione tessera!!");
+        	throw new NotFoundException(errMsg);
         	
         }
         
@@ -107,12 +125,18 @@ public class TesseramentoController {
 	@GetMapping(path = "/tipo")
     @SneakyThrows
     private ResponseEntity<List<TipoTessera>> actionTipoTessera() {
+
+		log.info("Carichiamo tipo tessere");
         
         List<TipoTessera> tipo = repoTipoTess.findAll();
         
         if(tipo.isEmpty()) {
+
+			String errMsg = "errore caricamento tipo tessera!!";
+
+			log.warning(errMsg);
         	
-        	throw new NotFoundException("errore caricamento integrazione tessera!!");
+        	throw new NotFoundException(errMsg);
         	
         }
         
@@ -129,19 +153,28 @@ public class TesseramentoController {
     	Tesseramento tesseraCheck = servTess.selByClienteId(tesseramento.getClienteTess().getId());
     	
     	if(tesseraCheck != null) {
+
+			String errMsg = String.format
+					("Cliente %s già tesserato!", tesseramento.getClienteTess().getCodiceFiscale());
+
+			log.warning(errMsg);
     		
-    		throw new DuplicateException(String.format
-    				("Cliente %s già tesserato!", tesseramento.getClienteTess().getCodiceFiscale()));
+    		throw new DuplicateException(errMsg);
     		
     	}
-    	
+		log.info("Inseriamo il tesserato con codice " + tesseramento.getCodiceTessera());
+
     	servTess.insTessera(tesseramento);
     	
     	LocalDate dataAtt = LocalDate.now();
     	
     	if(tesseramento.getScadenzaCertificato() == null || !tesseramento.isAttiva() || tesseramento.getScadenzaCertificato().isBefore(dataAtt)) {
+
+			String errMsg = "impossibile attivare la tessera campi richiesti non validi!!";
+
+			log.warning(errMsg);
     		
-    		throw new CheckingException("impossibile attivare la tessera campi richiesti non validi!!");
+    		throw new CheckingException(errMsg);
     		
     	}
         
@@ -156,6 +189,7 @@ public class TesseramentoController {
 	public ResponseEntity<InfoMsg> updateArt(@RequestBody Tesseramento tesseramento) {
 		
 		log.info("Modifichiamo il tesserato con codice " + tesseramento.getCodiceTessera());
+
 		Tesseramento checkTes = servTess.selByCodiceTessera(tesseramento.getCodiceTessera());
 		
 		if(checkTes == null) {
@@ -180,12 +214,18 @@ public class TesseramentoController {
 	@RequestMapping(path = "/remove-tessera/{codice}", method = RequestMethod.DELETE)
     @SneakyThrows
     public ResponseEntity<?> actionRemoveTessera(@PathVariable("codice") Integer codice) {
+
+		log.info("Eliminiamo il tesserato con codice " + codice);
         
     	Tesseramento tessera = servTess.selByCodiceTessera(codice);
         
         if(tessera == null) {
+
+			String errMsg = "Nessun tessera trovata con il codice selezionato, impossibile effettuare l'eliminazione!!";
+
+			log.warning(errMsg);
         	
-        	throw new NotFoundException("Nessun tessera trovata con il codice selezionato!!");
+        	throw new NotFoundException(errMsg);
         	
         } 
     	
@@ -204,12 +244,18 @@ public class TesseramentoController {
 	@GetMapping(path = "/quote-tessere/{codice}")
     @SneakyThrows
     private ResponseEntity<?> actionLoadQuoteTessera(@PathVariable(value = "codice") Integer codice) {
+
+		log.info(String.format("otteniamo le quote del cliente con codice", codice));
         
         Tesseramento tesseramento = servTess.selByCodiceTessera(codice);
         
         if(tesseramento == null) {
+
+			String errMsg = "Nessun tessera trovata con il codice selezionato, impossibile visualizzatre le quote!!";
+
+			log.warning(errMsg);
         	
-        	throw new NotFoundException("Nessun cliente tesserato trovato!!");
+        	throw new NotFoundException(errMsg);
         	
         }
         

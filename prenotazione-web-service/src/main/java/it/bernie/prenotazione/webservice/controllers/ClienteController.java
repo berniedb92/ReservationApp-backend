@@ -65,10 +65,10 @@ public class ClienteController {
     @GetMapping(path = "/list-clienti")
     @SneakyThrows
     private ResponseEntity<List<Cliente>> actionLoadClienti() {
+
+        log.info("Carichiamo la lista dei clienti");
         
         List<Cliente> clienti =  servCliente.selTutti();
-        
-        log.info("Carichiamo la lista dei clienti");
         
         if(clienti.isEmpty()) {
         	
@@ -87,6 +87,8 @@ public class ClienteController {
     @GetMapping(path = "/list-clienti-id/{id}")
     @SneakyThrows
     private ResponseEntity<Cliente> actionLoadClientiId(@PathVariable("id") Integer id) {
+
+        log.info("Ricevo l'id " + id);
         
         Optional<Cliente> clienti =  servCliente.selById(id);
         Cliente cliente = null;
@@ -122,10 +124,10 @@ public class ClienteController {
     @PostMapping(value = "/add-cliente")
     @SneakyThrows
     private ResponseEntity<InfoMsg> actionAddCliente(@RequestBody Cliente cliente) {
+
+        log.info("**** Inserimento cliente ****");
     	
     	Cliente clienteCheck = servCliente.selByCf(cliente.getCodiceFiscale());
-    	
-    	log.info("**** Inserimento cliente ****");
     	
     	if(clienteCheck != null) {
     		
@@ -148,6 +150,8 @@ public class ClienteController {
     @RequestMapping(path = "/remove-cliente/{id}", method = RequestMethod.DELETE)
     @SneakyThrows
     public ResponseEntity<?> actionRemoveCliente(@PathVariable("id") Integer id) {
+
+        log.info(String.format("eliminiamo il cliente con id %d", id));
         
     	Optional<Cliente> clienti = servCliente.selById(id);
         Cliente cliente = null;
@@ -191,7 +195,8 @@ public class ClienteController {
     @RequestMapping(path = "/update-cliente", method = RequestMethod.PUT)
     @SneakyThrows
     public ResponseEntity<InfoMsg> actionUpdateCliente(@RequestBody Cliente cliente) {
-        
+
+        log.info(String.format("modifichiamo il cliente con id %d", cliente.getId()));
 
     	Cliente clienteCheck = servCliente.selByCf(cliente.getCodiceFiscale());
     	
@@ -217,6 +222,8 @@ public class ClienteController {
     @GetMapping(path = "/list-clienti-complex")
     @SneakyThrows
     private ResponseEntity<List<Cliente>> actionLoadClientiComplex() {
+
+        log.info("carichiamo tutti i compleanni della giornata");
         
     	List<Cliente> clienti = servCliente.selTutti();
     	
@@ -249,6 +256,8 @@ public class ClienteController {
     @GetMapping(path = "/list-clienti-notessera")
     @SneakyThrows
     private ResponseEntity<List<Cliente>> actionLoadClientiNoTessera() {
+
+        log.info("carichiamo tutti i clienti senza tessera");
         
         List<Cliente> clienti =  servCliente.selTutti();
         

@@ -42,6 +42,11 @@ public class PrenotazioneServiceImpl implements PrenotazioneService {
 	}
 
 	@Override
+	public List<Prenotazione> selByDataAndCampo(String data, Integer campo) {
+		return repoPren.selPrenotazioniByDataAndCampo(data, campo);
+	}
+
+	@Override
 	public Prenotazione selById(Integer id) {
 		// TODO Auto-generated method stub
 		
