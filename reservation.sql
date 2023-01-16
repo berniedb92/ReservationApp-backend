@@ -8005,9 +8005,9 @@ CREATE TABLE IF NOT EXISTS `dettagli_prenotazione` (
   KEY `FK_dettagli_prenotazione_tesseramento` (`tesserato`) USING BTREE,
   CONSTRAINT `FK_dettagli_prenotazione_prenotazione` FOREIGN KEY (`codice`) REFERENCES `prenotazione` (`codice_prenotazione`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_dettagli_prenotazione_tesseramento` FOREIGN KEY (`tesserato`) REFERENCES `tesseramento` (`codice_tessera`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table reservation.dettagli_prenotazione: ~34 rows (approximately)
+-- Dumping data for table reservation.dettagli_prenotazione: ~50 rows (approximately)
 /*!40000 ALTER TABLE `dettagli_prenotazione` DISABLE KEYS */;
 INSERT INTO `dettagli_prenotazione` (`id_dettaglio`, `codice`, `tesserato`, `pagamento`, `pagamento_effettuato`, `note`) VALUES
 	(13, 2024, 1002, 0, b'1', 'bernardino è una sega A TENNIS'),
@@ -8043,7 +8043,25 @@ INSERT INTO `dettagli_prenotazione` (`id_dettaglio`, `codice`, `tesserato`, `pag
 	(57, 7839, 1002, 7, b'0', NULL),
 	(58, 7839, 1003, 7, b'0', NULL),
 	(59, 1016, 1002, 4, b'0', NULL),
-	(60, 1016, 1004, 7, b'0', NULL);
+	(60, 1016, 1004, 7, b'0', NULL),
+	(61, 4506, 1002, 4, b'0', NULL),
+	(62, 4506, 1003, 4, b'0', NULL),
+	(111, 7131, 1002, 7, b'0', NULL),
+	(112, 7131, 1003, 7, b'0', NULL),
+	(113, 7380, 1003, 7, b'0', NULL),
+	(114, 7380, 1005, 7, b'0', NULL),
+	(115, 6017, 1002, 7, b'0', NULL),
+	(116, 6017, 1003, 7, b'0', NULL),
+	(117, 9066, 1005, 7, b'0', NULL),
+	(118, 9066, 1006, 7, b'0', NULL),
+	(119, 2585, 1002, 4, b'0', NULL),
+	(120, 2585, 1003, 4, b'0', NULL),
+	(121, 5415, 1002, 3, b'0', NULL),
+	(122, 5415, 1003, 3, b'0', NULL),
+	(123, 5415, 1004, 6, b'0', NULL),
+	(124, 5415, 1005, 3, b'0', NULL),
+	(125, 1387, 1002, 4, b'0', NULL),
+	(126, 1387, 1003, 4, b'0', NULL);
 /*!40000 ALTER TABLE `dettagli_prenotazione` ENABLE KEYS */;
 
 -- Dumping structure for table reservation.integrazione_tessera
@@ -8098,9 +8116,9 @@ CREATE TABLE IF NOT EXISTS `prenotazione` (
   CONSTRAINT `FK_prenotazione_tesseramento_2` FOREIGN KEY (`giocatore2`) REFERENCES `tesseramento` (`codice_tessera`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_prenotazione_tesseramento_3` FOREIGN KEY (`giocatore3`) REFERENCES `tesseramento` (`codice_tessera`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_prenotazione_tesseramento_4` FOREIGN KEY (`giocatore4`) REFERENCES `tesseramento` (`codice_tessera`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table reservation.prenotazione: ~14 rows (approximately)
+-- Dumping data for table reservation.prenotazione: ~17 rows (approximately)
 /*!40000 ALTER TABLE `prenotazione` DISABLE KEYS */;
 INSERT INTO `prenotazione` (`id`, `codice_prenotazione`, `data`, `ora_inizio`, `ora_fine`, `modalita`, `campo`, `giocatore1`, `giocatore2`, `giocatore3`, `giocatore4`, `evento`) VALUES
 	(14, 2024, '2022-12-07', '16:00:00', '17:00:00', 'singolo', 1, 1002, 1003, NULL, NULL, NULL),
@@ -8116,8 +8134,25 @@ INSERT INTO `prenotazione` (`id`, `codice_prenotazione`, `data`, `ora_inizio`, `
 	(35, 6535, '2022-12-15', '18:00:00', '20:00:00', 'doppio', 2, 1002, 1005, 1004, 1007, NULL),
 	(37, 7839, '2022-12-13', '15:00:00', '17:00:00', 'padel', 3, 1005, 1007, 1002, 1003, NULL),
 	(38, 1016, '2022-12-14', '14:00:00', '15:00:00', 'singolo', 1, 1002, 1004, NULL, NULL, NULL),
-	(42, 5068, '2022-12-30', '09:00:00', '13:00:00', 'evento', 2, NULL, NULL, NULL, NULL, 'Scuola');
+	(42, 5068, '2022-12-30', '09:00:00', '13:00:00', 'evento', 2, NULL, NULL, NULL, NULL, 'Scuola'),
+	(46, 4506, '2023-01-05', '08:30:00', '09:30:00', 'singolo', 2, 1002, 1003, NULL, NULL, NULL),
+	(75, 7131, '2023-01-09', '09:00:00', '10:00:00', 'Singolo', 1, 1002, 1003, NULL, NULL, NULL),
+	(76, 7380, '2023-01-10', '09:00:00', '10:00:00', 'Singolo', 1, 1003, 1005, NULL, NULL, NULL),
+	(77, 6017, '2023-01-13', '09:00:00', '10:00:00', 'Singolo', 1, 1002, 1003, NULL, NULL, NULL),
+	(78, 9066, '2023-01-13', '15:00:00', '16:00:00', 'Singolo', 1, 1005, 1006, NULL, NULL, NULL),
+	(79, 2585, '2023-01-14', '17:00:00', '18:00:00', 'Singolo', 1, 1002, 1003, NULL, NULL, NULL),
+	(80, 5415, '2023-01-14', '18:00:00', '19:00:00', 'Doppio', 1, 1002, 1003, 1004, 1005, NULL),
+	(81, 1387, '2023-01-14', '12:00:00', '13:00:00', 'Singolo', 1, 1002, 1003, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `prenotazione` ENABLE KEYS */;
+
+-- Dumping structure for table reservation.role
+CREATE TABLE IF NOT EXISTS `role` (
+  `Column 1` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table reservation.role: ~0 rows (approximately)
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
 
 -- Dumping structure for table reservation.tesseramento
 CREATE TABLE IF NOT EXISTS `tesseramento` (
@@ -8172,6 +8207,20 @@ INSERT INTO `tipo_tessera` (`id`, `quota_associativa`, `tipo`, `prezzo`) VALUES
 	(3, 15, 'BASE', 0),
 	(4, 15, 'SUPER-TENNIS/SUPER-PADEL', 70);
 /*!40000 ALTER TABLE `tipo_tessera` ENABLE KEYS */;
+
+-- Dumping structure for table reservation.utente
+CREATE TABLE IF NOT EXISTS `utente` (
+  `id` varchar(50) NOT NULL,
+  `user_id` varchar(80) DEFAULT NULL,
+  `password` varchar(80) DEFAULT NULL,
+  `attivo` varchar(80) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table reservation.utente: ~0 rows (approximately)
+/*!40000 ALTER TABLE `utente` DISABLE KEYS */;
+/*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
