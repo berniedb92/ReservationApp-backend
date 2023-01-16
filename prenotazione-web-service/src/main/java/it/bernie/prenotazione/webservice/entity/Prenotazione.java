@@ -11,16 +11,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -74,12 +65,12 @@ public class Prenotazione implements Serializable {
     private Tesseramento giocatore2;
 	
 	@ManyToOne
-	@JoinColumn(name = "giocatore3", referencedColumnName = "codice_tessera")
+	@JoinColumn(name = "giocatore3", referencedColumnName = "codice_tessera", nullable = true)
 	//@Column(name = "giocatore3")
     private Tesseramento giocatore3;
 	
 	@ManyToOne
-	@JoinColumn(name = "giocatore4", referencedColumnName = "codice_tessera")
+	@JoinColumn(name = "giocatore4", referencedColumnName = "codice_tessera", nullable = true)
 	//@Column(name = "giocatore4")
     private Tesseramento giocatore4;
 	

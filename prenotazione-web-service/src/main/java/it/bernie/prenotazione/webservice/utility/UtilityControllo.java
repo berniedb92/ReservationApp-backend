@@ -91,7 +91,7 @@ public class UtilityControllo {
 	}
 
 	@SneakyThrows
-	public List<Tesseramento> controlloGiocatoriPrenotazione(Prenotazione prenotazione) {
+	public List<Tesseramento>     controlloGiocatoriPrenotazione(Prenotazione prenotazione) {
 		log.info("Controllo giocatori prenotazione");
 
 		List<Tesseramento> giocatori = new ArrayList<>();
@@ -102,7 +102,7 @@ public class UtilityControllo {
 
 		}
 
-		if (prenotazione.getGiocatore2() != null) {
+		if (prenotazione.getGiocatore2()!= null) {
 
 			giocatori.add(prenotazione.getGiocatore2());
 
@@ -127,7 +127,7 @@ public class UtilityControllo {
 
 				if (giocatori.get(i).equals(giocatori.get(y))) {
 
-					String ErrMsg = String.format("Giocatore duplicato nella lista dei giocatori", giocatori.get(i));
+					String ErrMsg = String.format("Giocatore  duplicato nella lista dei giocatori", giocatori.get(i));
 
 					log.warning(ErrMsg);
 

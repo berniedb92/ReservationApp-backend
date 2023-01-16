@@ -1,6 +1,8 @@
 package it.bernie.prenotazione.webservice.controllers;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -54,6 +56,8 @@ public class PrenotazioneController {
 
 		log.info("inseriamo la prenotazione");
 
+		log.info("*************PRENOTAZIONE*************** " + prenotazione);
+
 		Prenotazione checkPrenotazione = servPren.selById(prenotazione.getId());
 
 		if (checkPrenotazione != null) {
@@ -61,11 +65,17 @@ public class PrenotazioneController {
 			throw new DuplicateException("Errore prenotazione gia nel sistema");
 		}
 
+		if(prenotazione.getGiocatore3().getCodiceTessera() == -1
+				&& prenotazione.getGiocatore4().getCodiceTessera() == -1) {
+			prenotazione.setGiocatore3(null);
+			prenotazione.setGiocatore4(null);
+		}
 
 		List<Tesseramento> prenotati = controllo.controlloGiocatoriPrenotazione(prenotazione);
       
 		 controllo.controlloDatePrenotazione(prenotazione);
-		
+
+		log.info("inseriamo la prenotazione"+ prenotazione.getId());
 
 		servPren.insPrenotazione(prenotazione);
 
@@ -108,9 +118,14 @@ public class PrenotazioneController {
 	@GetMapping(value = "/list-pren-date/{date}")
 	public ResponseEntity<List<Prenotazione>> actionListPrenotazioneDate(@PathVariable String date) {
 
-		log.info(String.format("otteniamo le prenotazioni nella giornata %s", date));
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
 
-		List<Prenotazione> prenotazioni = servPren.selByData(date);
+		LocalDate dataaaa = dateTime.toLocalDate();
+
+		log.info(String.format("otteniamo le prenotazioni nella giornata %s", dataaaa.toString()));
+
+		List<Prenotazione> prenotazioni = servPren.selByData(dataaaa.toString());
 
 		if(prenotazioni.isEmpty()) {
 
@@ -130,9 +145,28 @@ public class PrenotazioneController {
 	@GetMapping(value = "/list-pren-campo/{date}/{campo}")
 	public ResponseEntity<List<Prenotazione>> actionListPrenotazioneDate(@PathVariable String date, @PathVariable Integer campo) {
 
-		log.info(String.format("otteniamo le prenotazioni nella giornata %s del campo %d", date, campo));
+		String dataString = "";
 
-		List<Prenotazione> prenotazioni = servPren.selByDataAndCampo(date, campo);
+		if(date.length() > 10) {
+
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			String[] split = date.split("\\.");
+			log.info(split[0]);
+			LocalDateTime dateTime = LocalDateTime.parse(split[0], formatter);
+
+			LocalDate dataaaa = dateTime.toLocalDate();
+			log.info(String.format("otteniamo le prenotazioni nella giornata %s del campo %d", dataaaa.toString(), campo));
+
+			dataString = dataaaa.toString();
+
+		} else {
+
+			log.info(String.format("otteniamo le prenotazioni nella giornata %s del campo %d", date, campo));
+
+			dataString = date;
+		}
+
+		List<Prenotazione> prenotazioni = servPren.selByDataAndCampo(dataString, campo);
 
 		if(prenotazioni.isEmpty()) {
 

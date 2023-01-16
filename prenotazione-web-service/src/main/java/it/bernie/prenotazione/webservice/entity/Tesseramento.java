@@ -78,19 +78,19 @@ public class Tesseramento implements Serializable {
 	@JsonBackReference
 	private Set<DettagliPrenotazione> dettCliente  =new HashSet<>();
 	
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "giocatore1")
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "giocatore1", cascade = CascadeType.ALL)
 	@JsonBackReference(value = "giocatore1")
 	private Set<Tesseramento> giocatore1  =new HashSet<>();
 	
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "giocatore2")
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "giocatore2", cascade = CascadeType.ALL)
 	@JsonBackReference(value = "giocatore2")
 	private Set<Tesseramento> giocatore2  =new HashSet<>();
 	
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "giocatore3")
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "giocatore3", cascade = CascadeType.ALL)
 	@JsonBackReference(value = "giocatore3")
 	private Set<Tesseramento> giocatore3  =new HashSet<>();
 	
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "giocatore4")
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "giocatore4", cascade = CascadeType.ALL)
 	@JsonBackReference(value = "giocatore4")
 	private Set<Tesseramento> giocatore4  =new HashSet<>();
 	

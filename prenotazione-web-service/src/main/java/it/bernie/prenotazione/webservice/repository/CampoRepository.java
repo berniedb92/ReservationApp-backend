@@ -11,6 +11,6 @@ import it.bernie.prenotazione.webservice.entity.DettagliPrenotazione;
 
 public interface CampoRepository extends JpaRepository<Campo, Integer> {
 
-		@Query(value = "SELECT * FROM campo WHERE id =:id", nativeQuery = true)
+		@Query(value = "SELECT * FROM campo WHERE numero=:id", nativeQuery = true)
 		public Campo selByIdCampo(@Param("id") Integer id);
 }
