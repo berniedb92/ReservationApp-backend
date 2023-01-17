@@ -65,11 +65,11 @@ public class PrenotazioneController {
 			throw new DuplicateException("Errore prenotazione gia nel sistema");
 		}
 
-		if(prenotazione.getGiocatore3().getCodiceTessera() == -1
-				&& prenotazione.getGiocatore4().getCodiceTessera() == -1) {
-			prenotazione.setGiocatore3(null);
-			prenotazione.setGiocatore4(null);
-		}
+//		if(prenotazione.getGiocatore3().getCodiceTessera() == -1
+//				&& prenotazione.getGiocatore4().getCodiceTessera() == -1) {
+//			prenotazione.setGiocatore3(null);
+//			prenotazione.setGiocatore4(null);
+//		}
 
 		List<Tesseramento> prenotati = controllo.controlloGiocatoriPrenotazione(prenotazione);
       

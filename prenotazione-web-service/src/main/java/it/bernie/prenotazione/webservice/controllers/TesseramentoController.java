@@ -99,6 +99,28 @@ public class TesseramentoController {
         return new ResponseEntity<Tesseramento>(tesseramento, HttpStatus.OK);
         
     }
+
+	@GetMapping(path = "/list-tesseramenti-cognome/{cognome}")
+	@SneakyThrows
+	private ResponseEntity<List<Tesseramento>> actionLoadTessera(@PathVariable(value = "cognome") String cognome) {
+
+		log.info(String.format("Carichiamo il tesserato con cognome %s", cognome));
+
+		List<Tesseramento> tesseramento = servTess.selByCognome(cognome);
+
+		if(tesseramento == null) {
+
+			String errMsg = String.format("Nessun cliente tesserato trovato con cognome %s!!", cognome);
+
+			log.warning(errMsg);
+
+			throw new NotFoundException(errMsg);
+
+		}
+
+		return new ResponseEntity<List<Tesseramento>>(tesseramento, HttpStatus.OK);
+
+	}
 	
 	@GetMapping(path = "/integrazione")
     @SneakyThrows

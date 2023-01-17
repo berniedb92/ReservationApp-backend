@@ -75,6 +75,11 @@ public class TesseramentoServiceImpl implements TesseramentoService {
 		return repoTess.selByCliente(id);
 	}
 
+	@Override
+	public List<Tesseramento> selByCognome(String cognome) {
+		return repoTess.selByClienteCognome(cognome);
+	}
+
 	@Transactional
 	@Override
 	public void deleteTessera(Tesseramento t) {

@@ -9,7 +9,9 @@ public interface TesseramentoService {
 	public Tesseramento selByCodiceTessera(Integer codiceTessera);
 	
 	public Tesseramento selByClienteId(Integer id);
-	
+
+	public List<Tesseramento> selByCognome(String cognome);
+
 	public List<Tesseramento> selTutti();
 	
 	public void insTessera(Tesseramento t);
