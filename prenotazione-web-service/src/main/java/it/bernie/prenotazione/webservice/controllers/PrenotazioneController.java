@@ -61,19 +61,27 @@ public class PrenotazioneController {
 		Prenotazione checkPrenotazione = servPren.selById(prenotazione.getId());
 
 		if (checkPrenotazione != null) {
+			
+			String errMsg = "\"Errore prenotazione gia nel sistema\"";
 
-			throw new DuplicateException("Errore prenotazione gia nel sistema");
+			log.warning(errMsg);
+
+			throw new DuplicateException(errMsg);
 		}
 
-//		if(prenotazione.getGiocatore3().getCodiceTessera() == -1
-//				&& prenotazione.getGiocatore4().getCodiceTessera() == -1) {
-//			prenotazione.setGiocatore3(null);
-//			prenotazione.setGiocatore4(null);
-//		}
+		if(prenotazione.getGiocatore1() == null
+				|| prenotazione.getGiocatore2() == null) {
+			
+			String errMsg = "Errore!! Giocatori non presenti nella prenotazione!!";
+
+			log.warning(errMsg);
+
+			throw new NotFoundException(errMsg);
+		}
 
 		List<Tesseramento> prenotati = controllo.controlloGiocatoriPrenotazione(prenotazione);
       
-		 controllo.controlloDatePrenotazione(prenotazione);
+		controllo.controlloDatePrenotazione(prenotazione);
 
 		log.info("inseriamo la prenotazione"+ prenotazione.getId());
 
@@ -146,6 +154,8 @@ public class PrenotazioneController {
 	public ResponseEntity<List<Prenotazione>> actionListPrenotazioneDate(@PathVariable String date, @PathVariable Integer campo) {
 
 		String dataString = "";
+
+		log.info(String.format("******************la data che arriva è***************** %s del campo %d", date, campo));
 
 		if(date.length() > 10) {
 

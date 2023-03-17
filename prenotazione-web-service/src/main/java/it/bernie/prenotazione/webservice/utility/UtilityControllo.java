@@ -127,7 +127,7 @@ public class UtilityControllo {
 
 				if (giocatori.get(i).equals(giocatori.get(y))) {
 
-					String ErrMsg = String.format("Giocatore  duplicato nella lista dei giocatori", giocatori.get(i));
+					String ErrMsg = String.format("Giocatore duplicato nella lista dei giocatori", giocatori.get(i));
 
 					log.warning(ErrMsg);
 
@@ -167,7 +167,8 @@ public class UtilityControllo {
 		for (int i = 0; i < listPre.size(); i++) {
 
 			String oraInizio = df2.format(listPre.get(i).getOraInizio());
-			if (oraInizio.equals(df3.format(prenotazione.getOraInizio())) && listPre.get(i).getCampo().getNumero() == prenotazione.getCampo().getNumero()) {
+			if (oraInizio.equals(df3.format(prenotazione.getOraInizio())) &&
+					listPre.get(i).getCampo().getNumero() == prenotazione.getCampo().getNumero()) {
 
 				String errMsg = String.format(
 						"Impossibile prenotare perche l'orario delle:%s scelto ha gia una prenotazione",

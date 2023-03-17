@@ -15,6 +15,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 
+
+
 @Entity
 @Table(name = "tipo_tessera")
 @Data

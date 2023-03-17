@@ -11,6 +11,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 
+
+
 @Document(collection = "utenti")
 @Data
 public class Utenti

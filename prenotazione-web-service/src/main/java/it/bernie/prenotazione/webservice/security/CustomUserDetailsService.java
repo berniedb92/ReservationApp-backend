@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import lombok.extern.java.Log;
 
+
 @Service("customUserDetailsService")
 @Log
 public class CustomUserDetailsService implements UserDetailsService

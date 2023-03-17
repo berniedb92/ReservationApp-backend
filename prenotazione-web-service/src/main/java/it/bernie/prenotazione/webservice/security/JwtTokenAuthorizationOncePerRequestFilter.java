@@ -22,6 +22,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.java.Log;
 
+
 @Component
 @Log
 public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFilter {

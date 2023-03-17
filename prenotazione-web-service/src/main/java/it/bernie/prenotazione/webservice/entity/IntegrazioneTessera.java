@@ -17,6 +17,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
+
+
 @Entity
 @Table(name = "integrazione_tessera")
 @Data

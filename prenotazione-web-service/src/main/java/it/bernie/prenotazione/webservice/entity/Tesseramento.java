@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
+
 @Entity
 @Table(name = "tesseramento")
 @Data

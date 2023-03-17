@@ -13,7 +13,7 @@ spring:
   data:
     mongodb:
       authentication-database: admin
-      database: park-users
+      database: reserve-users
       host: localhost
       password: foxmulder
       port: 37017

@@ -16,8 +16,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.websocket.OnError;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+
 
 @Entity
 @Table(name = "dettagli_prenotazione")

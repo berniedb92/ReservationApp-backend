@@ -90,7 +90,7 @@ public class DettagliPrenotazioneController {
 	public ResponseEntity<DettagliPrenotazione> selDettPrenByCodPreAndCodTess(@PathVariable("codPre") Integer codPre,
 			@PathVariable("idTessera") Integer idTessera) {
 
-		log.info("Otteniamo i dettagli di un Giocatore su una specifica prenotazione "+ codPre);
+		log.info("Otteniamo i dettagli di un Giocatore su una specifica prenotazione " + codPre);
 
 		DettagliPrenotazione dettPrenotazione = dettagliPrenotazioneService
 				.selectPrenotazioneByCodPrenotazioneAndIdCliente(codPre, idTessera);
@@ -145,6 +145,7 @@ public class DettagliPrenotazioneController {
 		}
 
 	}
+
 	@SneakyThrows
 	@PostMapping(value = "/dett-pre/modifica")
 	public ResponseEntity<InfoMsg> modificaDettaglioPrenotazione(
@@ -161,9 +162,11 @@ public class DettagliPrenotazioneController {
 			throw new BindingException(errMsg);
 		}
 
-		DettagliPrenotazione dett = dettagliPrenotazioneService.selectPrenotazioneByCodPrenotazioneAndIdCliente(dettagliPrenotazione.getCodicePrenotazione().getCodicePrenotazione(), dettagliPrenotazione.getCliente().getCodiceTessera());
+		DettagliPrenotazione dett = dettagliPrenotazioneService.selectPrenotazioneByCodPrenotazioneAndIdCliente(
+				dettagliPrenotazione.getCodicePrenotazione().getCodicePrenotazione(),
+				dettagliPrenotazione.getCliente().getCodiceTessera());
 
-		if (dett ==null) {
+		if (dett == null) {
 
 			String errMsg = String.format("Codice Prenotazione %s non presente nella lista dettagli",
 					dettagliPrenotazione.getCodicePrenotazione().getCodicePrenotazione());
@@ -175,40 +178,35 @@ public class DettagliPrenotazioneController {
 		} else {
 
 			dettagliPrenotazioneService.insertDettaglioPrenotazione(dettagliPrenotazione);
-			
-			return new ResponseEntity<InfoMsg>(
-					new InfoMsg(LocalDate.now(), "Modifica dettaglio avvenuto con successo"), HttpStatus.CREATED);
+
+			return new ResponseEntity<InfoMsg>(new InfoMsg(LocalDate.now(), "Modifica dettaglio avvenuto con successo"),
+					HttpStatus.CREATED);
 		}
 
 	}
-	
-	
+
 	@SneakyThrows
 	@DeleteMapping(value = "/dett-pre/elimina/{idDett}")
-	public ResponseEntity<?> deleteDettPrenotazione(@PathVariable("idDett") Integer idDett){
-		
-		
+	public ResponseEntity<?> deleteDettPrenotazione(@PathVariable("idDett") Integer idDett) {
+
 		log.info("ELiminazione dettaglio Prenotazione ");
-		
-	DettagliPrenotazione dettagliPrenotazione = dettagliPrenotazioneService.selectDettByIdDett(idDett);
-		
-		if(dettagliPrenotazione == null) {
-			
+
+		DettagliPrenotazione dettagliPrenotazione = dettagliPrenotazioneService.selectDettByIdDett(idDett);
+
+		if (dettagliPrenotazione == null) {
+
 			String errMsg = String.format("Elemento %s non presente nella lista dettagliPrenotazione", idDett);
 		}
-		
-		 dettagliPrenotazioneService.deleteDettaglioPrenotazione(dettagliPrenotazione);
-		
-	
-	
-	ObjectMapper mapper = new ObjectMapper();
-	ObjectNode responseNode = mapper.createObjectNode();
-	
-	responseNode.put("code", HttpStatus.OK.toString());
-	responseNode.put("message", "Eliminazione "
-			+ "Dettaglio " + idDett + " Eseguita Con Successo");
-	
-	return new ResponseEntity<>(responseNode, new HttpHeaders(), HttpStatus.OK);
-}
+
+		dettagliPrenotazioneService.deleteDettaglioPrenotazione(dettagliPrenotazione);
+
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode responseNode = mapper.createObjectNode();
+
+		responseNode.put("code", HttpStatus.OK.toString());
+		responseNode.put("message", "Eliminazione " + "Dettaglio " + idDett + " Eseguita Con Successo");
+
+		return new ResponseEntity<>(responseNode, new HttpHeaders(), HttpStatus.OK);
+	}
 
 }
