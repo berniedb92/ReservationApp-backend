@@ -54,4 +54,8 @@ public class Campo {
 	@JsonBackReference(value = "campo")
 	private Set<Prenotazione> prenotazione = new HashSet<>();
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "campo")
+	@JsonBackReference(value = "disponibilita")
+	private Set<Prenotazione> disponibilita = new HashSet<>();
+	
 }

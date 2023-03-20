@@ -22,18 +22,15 @@ CREATE TABLE IF NOT EXISTS `campo` (
   `numero` tinyint(4) NOT NULL,
   `superficie` varchar(50) NOT NULL,
   `sport` varchar(50) NOT NULL DEFAULT '0',
-  `ore_disponibili` int(11) NOT NULL DEFAULT 0,
-  `inizio_ore_prenotabili` date DEFAULT NULL,
-  `fine_ore_prenotabili` date DEFAULT NULL,
   PRIMARY KEY (`numero`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table reservation.campo: ~3 rows (approximately)
 /*!40000 ALTER TABLE `campo` DISABLE KEYS */;
-INSERT INTO `campo` (`numero`, `superficie`, `sport`, `ore_disponibili`, `inizio_ore_prenotabili`, `fine_ore_prenotabili`) VALUES
-	(1, 'Terra Battuta', 'Tennis', 0, NULL, NULL),
-	(2, 'Terra Battuta', 'Tennis', 0, NULL, NULL),
-	(3, 'Erba Sintetica', 'Padel', 0, NULL, NULL);
+INSERT INTO `campo` (`numero`, `superficie`, `sport`) VALUES
+	(1, 'Terra Battuta', 'Tennis'),
+	(2, 'Terra Battuta', 'Tennis'),
+	(3, 'Erba Sintetica', 'Padel');
 /*!40000 ALTER TABLE `campo` ENABLE KEYS */;
 
 -- Dumping structure for table reservation.cliente
@@ -8005,9 +8002,9 @@ CREATE TABLE IF NOT EXISTS `dettagli_prenotazione` (
   KEY `FK_dettagli_prenotazione_tesseramento` (`tesserato`) USING BTREE,
   CONSTRAINT `FK_dettagli_prenotazione_prenotazione` FOREIGN KEY (`codice`) REFERENCES `prenotazione` (`codice_prenotazione`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_dettagli_prenotazione_tesseramento` FOREIGN KEY (`tesserato`) REFERENCES `tesseramento` (`codice_tessera`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=149 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table reservation.dettagli_prenotazione: ~50 rows (approximately)
+-- Dumping data for table reservation.dettagli_prenotazione: ~71 rows (approximately)
 /*!40000 ALTER TABLE `dettagli_prenotazione` DISABLE KEYS */;
 INSERT INTO `dettagli_prenotazione` (`id_dettaglio`, `codice`, `tesserato`, `pagamento`, `pagamento_effettuato`, `note`) VALUES
 	(13, 2024, 1002, 0, b'1', 'bernardino è una sega A TENNIS'),
@@ -8061,8 +8058,51 @@ INSERT INTO `dettagli_prenotazione` (`id_dettaglio`, `codice`, `tesserato`, `pag
 	(123, 5415, 1004, 6, b'0', NULL),
 	(124, 5415, 1005, 3, b'0', NULL),
 	(125, 1387, 1002, 4, b'0', NULL),
-	(126, 1387, 1003, 4, b'0', NULL);
+	(126, 1387, 1003, 4, b'0', NULL),
+	(127, 5919, 1003, 4, b'0', NULL),
+	(128, 5919, 1002, 4, b'0', NULL),
+	(129, 395, 1004, 7, b'0', NULL),
+	(130, 395, 1007, 7, b'0', NULL),
+	(131, 636, 1002, 3, b'0', NULL),
+	(132, 636, 1003, 3, b'0', NULL),
+	(133, 636, 1007, 6, b'0', NULL),
+	(134, 636, 1004, 6, b'0', NULL),
+	(135, 4084, 1002, 4, b'0', NULL),
+	(136, 4084, 1003, 4, b'0', NULL),
+	(137, 5763, 1006, 4, b'0', NULL),
+	(138, 5763, 1005, 4, b'0', NULL),
+	(139, 2562, 1006, 4, b'0', NULL),
+	(141, 6937, 1006, 4, b'0', NULL),
+	(142, 6937, 1004, 7, b'0', NULL),
+	(143, 4301, 1006, 3, b'0', NULL),
+	(144, 4301, 1002, 3, b'0', NULL),
+	(145, 4301, 1003, 3, b'0', NULL),
+	(146, 636, 1004, 4, b'0', NULL),
+	(147, 5011, 1002, 4, b'0', NULL),
+	(148, 5011, 1005, 4, b'0', NULL);
 /*!40000 ALTER TABLE `dettagli_prenotazione` ENABLE KEYS */;
+
+-- Dumping structure for table reservation.disponibilita_campo
+CREATE TABLE IF NOT EXISTS `disponibilita_campo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `campo` tinyint(4) DEFAULT NULL,
+  `giorno` date DEFAULT NULL,
+  `disponibilita` varchar(1500) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_disponibilità_campo_campo` (`campo`),
+  CONSTRAINT `FK_disponibilità_campo_campo` FOREIGN KEY (`campo`) REFERENCES `campo` (`numero`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table reservation.disponibilita_campo: ~5 rows (approximately)
+/*!40000 ALTER TABLE `disponibilita_campo` DISABLE KEYS */;
+INSERT INTO `disponibilita_campo` (`id`, `campo`, `giorno`, `disponibilita`) VALUES
+	(1, 1, '2023-03-19', '[{"oraInizio": "8:00","oraFine": "9:00","available": true},{"oraInizio": "9:00","oraFine": "10:00","available": true},{"oraInizio": "10:00","oraFine": "11:00","available": true},{"oraInizio": "11:00","oraFine": "12:00","available": true},{"oraInizio": "12:00","oraFine": "13:00","available": true},{"oraInizio": "13:00","oraFine": "14:00","available": true},{"oraInizio": "14:00","oraFine": "15:00","available": true},{"oraInizio": "15:00","oraFine": "16:00","available": true},{"oraInizio": "16:00","oraFine": "17:00","available": true},{"oraInizio": "17:00","oraFine": "18:00","available": true},{"oraInizio": "18:00","oraFine": "19:00","available": true},{"oraInizio": "19:00","oraFine": "20:00","available": true},{"oraInizio": "20:00","oraFine": "21:00","available": true},{"oraInizio": "21:00","oraFine": "22:00","available": true},{"oraInizio": "22:00","oraFine": "23:00","available": true}]'),
+	(2, 2, '2023-03-19', '[{"oraInizio": "8:30","oraFine": "9:30","available": true},{"oraInizio": "9:30","oraFine": "10:30","available": true},{"oraInizio": "10:30","oraFine": "11:30","available": true},{"oraInizio": "11:30","oraFine": "12:30","available": true},{"oraInizio": "12:30","oraFine": "13:30","available": true},{"oraInizio": "13:30","oraFine": "14:30","available": true},{"oraInizio": "14:30","oraFine": "15:30","available": true},{"oraInizio": "15:30","oraFine": "16:30","available": true},{"oraInizio": "16:30","oraFine": "17:30","available": true},{"oraInizio": "17:30","oraFine": "18:30","available": true},{"oraInizio": "18:30","oraFine": "19:30","available": true},{"oraInizio": "19:30","oraFine": "20:30","available": true},{"oraInizio": "20:30","oraFine": "21:30","available": true},{"oraInizio": "21:30","oraFine": "22:30","available": true},{"oraInizio": "22:30","oraFine": "23:30","available": true}]'),
+	(3, 3, '2023-03-19', '[{"oraInizio": "8:00","oraFine": "9:30","available": true},{"oraInizio": "9:30","oraFine": "11:00","available": true},{"oraInizio": "11:00","oraFine": "12:30","available": true},{"oraInizio": "12:30","oraFine": "14:00","available": true},{"oraInizio": "14:00","oraFine": "15:30","available": true},{"oraInizio": "15:30","oraFine": "17:00","available": true},{"oraInizio": "17:00","oraFine": "18:30","available": true},{"oraInizio": "18:30","oraFine": "20:00","available": true},{"oraInizio": "20:00","oraFine": "21:30","available": true},{"oraInizio": "21:30","oraFine": "23:00","available": true}]'),
+	(4, 1, '2023-03-20', '[{"oraInizio": "8:00","oraFine": "9:00","available": true},{"oraInizio": "9:00","oraFine": "10:00","available": false},{"oraInizio": "10:00","oraFine": "11:00","available": true},{"oraInizio": "11:00","oraFine": "12:00","available": true},{"oraInizio": "12:00","oraFine": "13:00","available": true},{"oraInizio": "13:00","oraFine": "14:00","available": true},{"oraInizio": "14:00","oraFine": "15:00","available": true},{"oraInizio": "15:00","oraFine": "16:00","available": true},{"oraInizio": "16:00","oraFine": "17:00","available": true},{"oraInizio": "17:00","oraFine": "18:00","available": true},{"oraInizio": "18:00","oraFine": "19:00","available": true},{"oraInizio": "19:00","oraFine": "20:00","available": true},{"oraInizio": "20:00","oraFine": "21:00","available": true},{"oraInizio": "21:00","oraFine": "22:00","available": true},{"oraInizio": "22:00","oraFine": "23:00","available": true}]'),
+	(5, 2, '2023-03-20', '[{"oraInizio": "8:30","oraFine": "9:30","available": true},{"oraInizio": "9:30","oraFine": "10:30","available": true},{"oraInizio": "10:30","oraFine": "11:30","available": true},{"oraInizio": "11:30","oraFine": "12:30","available": true},{"oraInizio": "12:30","oraFine": "13:30","available": true},{"oraInizio": "13:30","oraFine": "14:30","available": true},{"oraInizio": "14:30","oraFine": "15:30","available": true},{"oraInizio": "15:30","oraFine": "16:30","available": true},{"oraInizio": "16:30","oraFine": "17:30","available": true},{"oraInizio": "17:30","oraFine": "18:30","available": true},{"oraInizio": "18:30","oraFine": "19:30","available": true},{"oraInizio": "19:30","oraFine": "20:30","available": true},{"oraInizio": "20:30","oraFine": "21:30","available": true},{"oraInizio": "21:30","oraFine": "22:30","available": true},{"oraInizio": "22:30","oraFine": "23:30","available": true}]'),
+	(6, 3, '2023-03-20', '[{"oraInizio": "8:00","oraFine": "9:30","available": true},{"oraInizio": "9:30","oraFine": "11:00","available": true},{"oraInizio": "11:00","oraFine": "12:30","available": true},{"oraInizio": "12:30","oraFine": "14:00","available": true},{"oraInizio": "14:00","oraFine": "15:30","available": true},{"oraInizio": "15:30","oraFine": "17:00","available": true},{"oraInizio": "17:00","oraFine": "18:30","available": true},{"oraInizio": "18:30","oraFine": "20:00","available": true},{"oraInizio": "20:00","oraFine": "21:30","available": true},{"oraInizio": "21:30","oraFine": "23:00","available": true}]');
+/*!40000 ALTER TABLE `disponibilita_campo` ENABLE KEYS */;
 
 -- Dumping structure for table reservation.integrazione_tessera
 CREATE TABLE IF NOT EXISTS `integrazione_tessera` (
@@ -8116,9 +8156,9 @@ CREATE TABLE IF NOT EXISTS `prenotazione` (
   CONSTRAINT `FK_prenotazione_tesseramento_2` FOREIGN KEY (`giocatore2`) REFERENCES `tesseramento` (`codice_tessera`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_prenotazione_tesseramento_3` FOREIGN KEY (`giocatore3`) REFERENCES `tesseramento` (`codice_tessera`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_prenotazione_tesseramento_4` FOREIGN KEY (`giocatore4`) REFERENCES `tesseramento` (`codice_tessera`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table reservation.prenotazione: ~17 rows (approximately)
+-- Dumping data for table reservation.prenotazione: ~31 rows (approximately)
 /*!40000 ALTER TABLE `prenotazione` DISABLE KEYS */;
 INSERT INTO `prenotazione` (`id`, `codice_prenotazione`, `data`, `ora_inizio`, `ora_fine`, `modalita`, `campo`, `giocatore1`, `giocatore2`, `giocatore3`, `giocatore4`, `evento`) VALUES
 	(14, 2024, '2022-12-07', '16:00:00', '17:00:00', 'singolo', 1, 1002, 1003, NULL, NULL, NULL),
@@ -8136,13 +8176,24 @@ INSERT INTO `prenotazione` (`id`, `codice_prenotazione`, `data`, `ora_inizio`, `
 	(38, 1016, '2022-12-14', '14:00:00', '15:00:00', 'singolo', 1, 1002, 1004, NULL, NULL, NULL),
 	(42, 5068, '2022-12-30', '09:00:00', '13:00:00', 'evento', 2, NULL, NULL, NULL, NULL, 'Scuola'),
 	(46, 4506, '2023-01-05', '08:30:00', '09:30:00', 'singolo', 2, 1002, 1003, NULL, NULL, NULL),
-	(75, 7131, '2023-01-09', '09:00:00', '10:00:00', 'Singolo', 1, 1002, 1003, NULL, NULL, NULL),
-	(76, 7380, '2023-01-10', '09:00:00', '10:00:00', 'Singolo', 1, 1003, 1005, NULL, NULL, NULL),
-	(77, 6017, '2023-01-13', '09:00:00', '10:00:00', 'Singolo', 1, 1002, 1003, NULL, NULL, NULL),
-	(78, 9066, '2023-01-13', '15:00:00', '16:00:00', 'Singolo', 1, 1005, 1006, NULL, NULL, NULL),
-	(79, 2585, '2023-01-14', '17:00:00', '18:00:00', 'Singolo', 1, 1002, 1003, NULL, NULL, NULL),
-	(80, 5415, '2023-01-14', '18:00:00', '19:00:00', 'Doppio', 1, 1002, 1003, 1004, 1005, NULL),
-	(81, 1387, '2023-01-14', '12:00:00', '13:00:00', 'Singolo', 1, 1002, 1003, NULL, NULL, NULL);
+	(75, 7131, '2023-01-09', '09:00:00', '10:00:00', 'singolo', 1, 1002, 1003, NULL, NULL, NULL),
+	(76, 7380, '2023-01-10', '09:00:00', '10:00:00', 'singolo', 1, 1003, 1005, NULL, NULL, NULL),
+	(77, 6017, '2023-01-13', '09:00:00', '10:00:00', 'singolo', 1, 1002, 1003, NULL, NULL, NULL),
+	(78, 9066, '2023-01-13', '15:00:00', '16:00:00', 'singolo', 1, 1005, 1006, NULL, NULL, NULL),
+	(79, 2585, '2023-01-14', '17:00:00', '18:00:00', 'singolo', 1, 1002, 1003, NULL, NULL, NULL),
+	(80, 5415, '2023-01-14', '18:00:00', '19:00:00', 'doppio', 1, 1002, 1003, 1004, 1005, NULL),
+	(81, 1387, '2023-01-14', '12:00:00', '13:00:00', 'singolo', 1, 1002, 1003, NULL, NULL, NULL),
+	(84, 5919, '2023-01-17', '10:00:00', '11:00:00', 'singolo', 1, 1003, 1002, NULL, NULL, NULL),
+	(85, 395, '2023-01-17', '19:00:00', '20:00:00', 'singolo', 1, 1004, 1007, NULL, NULL, NULL),
+	(86, 636, '2023-01-18', '14:30:00', '16:30:00', 'doppio', 2, 1002, 1003, 1007, 1004, NULL),
+	(87, 4084, '2023-03-06', '17:00:00', '18:00:00', 'singolo', 1, 1002, 1003, NULL, NULL, NULL),
+	(88, 5763, '2023-03-06', '18:00:00', '19:00:00', 'singolo', 1, 1006, 1005, NULL, NULL, NULL),
+	(89, 2562, '2023-03-07', '22:00:00', '23:00:00', 'singolo', 1, 1006, 1005, NULL, NULL, NULL),
+	(90, 6937, '2023-03-07', '10:00:00', '11:00:00', 'singolo', 1, 1006, 1004, NULL, NULL, NULL),
+	(91, 4301, '2023-03-07', '15:00:00', '16:00:00', 'doppio', 1, 1006, 1004, 1002, 1003, NULL),
+	(92, 842, '2023-03-07', '14:00:00', '15:00:00', 'evento', 1, NULL, NULL, NULL, NULL, 'Scuola'),
+	(93, 6745, '2023-03-07', '18:00:00', '21:00:00', 'evento', 1, NULL, NULL, NULL, NULL, 'Scuola'),
+	(94, 5011, '2023-03-07', '21:00:00', '22:00:00', 'singolo', 1, 1002, 1005, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `prenotazione` ENABLE KEYS */;
 
 -- Dumping structure for table reservation.role
@@ -8186,7 +8237,7 @@ INSERT INTO `tesseramento` (`cliente`, `tipo_tessera`, `integrazione_tessera`, `
 	(16, 4, 3, 1006, '2022-12-12', '2023-10-26', '2022-12-31', b'1', NULL, 115, b'0'),
 	(20, 2, 9, 1007, '2022-12-12', '2022-12-28', '2022-12-31', b'1', NULL, 53, b'0'),
 	(29, 1, 10, 1008, '2022-12-12', '2022-12-27', '2022-12-31', b'1', NULL, 0, b'0'),
-	(30, 3, 9, 1009, '2022-12-12', '2022-12-28', '2022-12-31', b'1', NULL, 0, b'0'),
+	(30, 3, 9, 1009, '2022-12-12', '2022-12-28', '2022-12-31', b'0', NULL, 0, b'0'),
 	(31, 3, 9, 1010, '2022-12-12', '2022-12-30', '2022-12-31', b'1', NULL, 18, b'0');
 /*!40000 ALTER TABLE `tesseramento` ENABLE KEYS */;
 
