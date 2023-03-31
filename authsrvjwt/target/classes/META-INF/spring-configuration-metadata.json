@@ -23,7 +23,7 @@
       "sourceType": "com.jwtauth.webapp.security.UserConfig"
     },
     {
-      "name": "gestuser.user-id",
+      "name": "gestuser.userid",
       "type": "java.lang.String",
       "sourceType": "com.jwtauth.webapp.security.UserConfig"
     },

@@ -53,9 +53,8 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 
-//	private static final String[] USER_MATCHER = { "/us-parcheggio/**"};
-//	private static final String[] ADMIN_MATCHER = { "/ad-parcheggio/**" };
-	private static final String[] CLIENTE_MATCHER = { "/api/reservation/**" };
+	private static final String[] USER_MATCHER = { "/api/reservation/prenotazione/**"};
+	private static final String[] ADMIN_MATCHER = { "/api/reservation/**" };
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -65,9 +64,8 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()
 		.authorizeRequests()
-//		.antMatchers(USER_MATCHER).hasAnyRole("USER", "ADMIN")
-//		.antMatchers(ADMIN_MATCHER).hasAnyRole("ADMIN")
-		.antMatchers(CLIENTE_MATCHER).permitAll()
+		.antMatchers(USER_MATCHER).hasAnyRole("USER", "ADMIN")
+		.antMatchers(ADMIN_MATCHER).hasAnyRole("ADMIN")
 		.anyRequest().authenticated();
 
 		httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);

@@ -20,7 +20,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	private static String REALM = "REAME";
 	
-	private static final String[] ADMIN_MATCHER = { "/utenti/inserisci/**", "/utenti/elimina/**" };
+	private static final String[] ADMIN_MATCHER = { "/utenti/inserisci/**", "/utenti/elimina/**", "api/utenti/cerca/tutti" };
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {

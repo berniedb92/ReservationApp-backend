@@ -11,9 +11,9 @@ public interface PrenotazioneService {
 	
 	public List<Prenotazione> selTutte();
 	
-	public List<Prenotazione> selByData(String data);
+	public List<Prenotazione> selByData(Date data);
 
-	public List<Prenotazione> selByDataAndCampo(String data, Integer campo);
+	public List<Prenotazione> selByDataAndCampo(Date data, Integer campo);
 	
 	public Prenotazione selById(Integer id);
 	

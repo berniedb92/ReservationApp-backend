@@ -8,6 +8,8 @@ public interface TesseramentoService {
 	
 	public Tesseramento selByCodiceTessera(Integer codiceTessera);
 	
+	public Tesseramento selByUser(String user);
+	
 	public Tesseramento selByClienteId(Integer id);
 
 	public List<Tesseramento> selByCognome(String cognome);

@@ -49,12 +49,18 @@ public class CustomUserDetailsService implements UserDetailsService
 		}
 		
 		UserBuilder builder = null;
-		builder = org.springframework.security.core.userdetails.User.withUsername(utente.getUserId());
+		builder = org.springframework.security.core.userdetails.User.withUsername(utente.getUserid());
 		builder.disabled((utente.getAttivo().equals("Si") ? false : true));
 		builder.password(utente.getPassword());
 		
-		String[] profili = utente.getRuoli()
-				 .stream().map(a -> "ROLE_" + a).toArray(String[]::new);
+//		String[] profili = utente.getRoles()
+//				 .stream().map(a -> "ROLE_" + a).toArray(String[]::new);
+		
+		String[] profili = new String[2];
+		
+		for(int i = 0;i < utente.getRoles().size();i++) {
+			profili[i] = "ROLE_" + utente.getRoles().get(i).getName();
+		}
 		
 		builder.authorities(profili);
 		
@@ -80,7 +86,7 @@ public class CustomUserDetailsService implements UserDetailsService
 		}
 		
 		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(Config.getUserId(), Config.getPassword()));
+		restTemplate.getInterceptors().add(new BasicAuthenticationInterceptor(Config.getUserid(), Config.getPassword()));
 		
 		Utenti utente = null;
 

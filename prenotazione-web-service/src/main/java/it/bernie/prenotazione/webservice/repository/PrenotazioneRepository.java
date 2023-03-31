@@ -13,7 +13,7 @@ import it.bernie.prenotazione.webservice.entity.Prenotazione;
 public interface PrenotazioneRepository extends JpaRepository<Prenotazione, Integer> {
 	
 	@Query(value = "SELECT * FROM prenotazione WHERE data =:data", nativeQuery = true)
-	public List<Prenotazione> selByData(@Param("data") String data);
+	public List<Prenotazione> selByData(@Param("data") Date data);
 
 	
 	@Query(value ="SELECT * FROM prenotazione WHERE codice_prenotazione =:codPre",nativeQuery = true)
@@ -22,6 +22,6 @@ public interface PrenotazioneRepository extends JpaRepository<Prenotazione, Inte
 	@Query(value ="SELECT * FROM prenotazione WHERE data =:data",nativeQuery = true)
 	public List<Prenotazione> selPrenotazioniByData(@Param("data") String data);
 
-	@Query(value ="SELECT * FROM prenotazione WHERE data =:data AND campo=:campo",nativeQuery = true)
-	public List<Prenotazione> selPrenotazioniByDataAndCampo(@Param("data") String data, @Param("campo") Integer campo);
+	@Query(value ="SELECT * FROM prenotazione WHERE data=:data AND campo=:campo",nativeQuery = true)
+	public List<Prenotazione> selPrenotazioniByDataAndCampo(@Param("data") Date data, @Param("campo") Integer campo);
 }

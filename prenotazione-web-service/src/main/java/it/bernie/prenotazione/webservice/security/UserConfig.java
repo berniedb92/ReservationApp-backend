@@ -11,6 +11,6 @@ import lombok.Data;
 public class UserConfig 
 {
 	private String srvUrl;
-	private String userId;
+	private String userid;
 	private String password;
 }

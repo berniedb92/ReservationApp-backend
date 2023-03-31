@@ -80,7 +80,7 @@ public class TesseramentoController {
 	
 	@GetMapping(path = "/list-tesseramenti-id/{codice}")
     @SneakyThrows
-    private ResponseEntity<Tesseramento> actionLoadTessera(@PathVariable(value = "codice") Integer codice) {
+    private ResponseEntity<Tesseramento> actionLoadTesseraCodice(@PathVariable(value = "codice") Integer codice) {
 
 		log.info(String.format("Carichiamo il tesserato con codice %d", codice));
         
@@ -89,6 +89,28 @@ public class TesseramentoController {
         if(tesseramento == null) {
 
 			String errMsg = String.format("Nessun cliente tesserato trovato con id %d!!", codice);
+
+			log.warning(errMsg);
+        	
+        	throw new NotFoundException(errMsg);
+        	
+        }
+        
+        return new ResponseEntity<Tesseramento>(tesseramento, HttpStatus.OK);
+        
+    }
+	
+	@GetMapping(path = "/list-tesseramenti-user/{userId}")
+    @SneakyThrows
+    private ResponseEntity<Tesseramento> actionLoadTesseraUserId(@PathVariable(value = "userId") String userId) {
+
+		log.info(String.format("Carichiamo il tesserato con nome utente %s", userId));
+        
+        Tesseramento tesseramento = servTess.selByUser(userId);
+        
+        if(tesseramento == null) {
+
+			String errMsg = String.format("Nessun cliente tesserato trovato con nome utente %s!!", userId);
 
 			log.warning(errMsg);
         	

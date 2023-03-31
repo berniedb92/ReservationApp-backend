@@ -57,10 +57,10 @@ public class ClienteController {
     ClienteService servCliente;
     
     @Autowired
-    UtilityCalcolo calcolo;
+    UtilityCalcolo calcoloCl;
     
     @Autowired
-    UtilityControllo controllo;
+    UtilityControllo controlloCl;
     
     @GetMapping(path = "/list-clienti")
     @SneakyThrows
@@ -237,7 +237,7 @@ public class ClienteController {
         	
         }
     	
-        List<Cliente> clientiComplex = calcolo.compleanni(clienti);;
+        List<Cliente> clientiComplex = calcoloCl.compleanni(clienti);;
         
         if(clientiComplex.isEmpty()) {
         	
@@ -271,7 +271,7 @@ public class ClienteController {
         	
         }
         
-        List<Cliente> clientiComplex = controllo.clientiNonTesserati(clienti);
+        List<Cliente> clientiComplex = controlloCl.clientiNonTesserati(clienti);
         
         if(clienti.isEmpty()) {
         	

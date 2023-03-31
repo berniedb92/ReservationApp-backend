@@ -7,10 +7,11 @@ import lombok.Data;
 @Data
 public class Utenti 
 {
-	private String id;
-	private String userId;
+	private Integer id;
+	private String userid;
 	private String password;
 	private String attivo;
+	private Integer codicetessera;
 	
-	private List<String> ruoli;	
+	private List<Ruoli> roles;	
 }

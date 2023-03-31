@@ -10,16 +10,16 @@ import com.gestuser.webapp.models.Utenti;
 import com.gestuser.webapp.repository.UtentiRepository;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional()
 public class UtentiServiceImpl implements UtentiService {
 	
 	@Autowired
 	UtentiRepository utentiRepo;
 
 	@Override
-	public Utenti findByUserId(String UserId) {
+	public Utenti findByUserId(String Userid) {
 		
-		return utentiRepo.findByUserId(UserId);
+		return utentiRepo.findByUserId(Userid);
 		
 	}
 

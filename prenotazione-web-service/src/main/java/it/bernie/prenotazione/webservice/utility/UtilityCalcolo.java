@@ -18,7 +18,6 @@ import it.bernie.prenotazione.webservice.entity.Tesseramento;
 import it.bernie.prenotazione.webservice.repository.ClienteRepository;
 import it.bernie.prenotazione.webservice.services.TesseramentoService;
 
-@Service
 public class UtilityCalcolo {
 	
 	public List<Cliente> compleanni(List<Cliente> clienti) {

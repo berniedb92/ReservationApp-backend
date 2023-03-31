@@ -5,36 +5,54 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import it.bernie.prenotazione.webservice.entity.Cliente;
+import it.bernie.prenotazione.webservice.entity.DisponibilitaCampo;
 import it.bernie.prenotazione.webservice.entity.Prenotazione;
 import it.bernie.prenotazione.webservice.entity.Tesseramento;
 import it.bernie.prenotazione.webservice.exceptions.DuplicateException;
 import it.bernie.prenotazione.webservice.exceptions.NotFoundException;
 import it.bernie.prenotazione.webservice.services.ClienteService;
 import it.bernie.prenotazione.webservice.services.DettagliPrenotazioneService;
+import it.bernie.prenotazione.webservice.services.DisponibilitaCampoService;
 import it.bernie.prenotazione.webservice.services.PrenotazioneService;
 import it.bernie.prenotazione.webservice.services.TesseramentoService;
 import lombok.SneakyThrows;
 import lombok.extern.java.Log;
 
-@Service
 @Log
 public class UtilityControllo {
 
+	@Lazy
 	@Autowired
-	TesseramentoService servTess;
+	TesseramentoService servTessC;
 
+	@Lazy
 	@Autowired
-	ClienteService servCliente;
+	ClienteService servClienteC;
 
+	@Lazy
 	@Autowired
-	DettagliPrenotazioneService servDett;
+	DettagliPrenotazioneService servDettC;
 
+	@Lazy
 	@Autowired
-	PrenotazioneService servPre;
+	PrenotazioneService servPreC;
+	
+	@Lazy
+	@Autowired
+    DisponibilitaCampoService servDisponibilitaCampoC;
 
 	private static final String FORMATDATA = "yyyy-MM-dd";
 
@@ -44,7 +62,7 @@ public class UtilityControllo {
 		List<Cliente> clientiTess = new ArrayList<>();
 
 		clientiTess.addAll(clienti);
-		List<Tesseramento> tesseramenti = servTess.selTutti();
+		List<Tesseramento> tesseramenti = servTessC.selTutti();
 
 		for (int i = 0; i < tesseramenti.size(); i++) {
 
@@ -76,7 +94,7 @@ public class UtilityControllo {
 			prenotazione.setCodicePrenotazione(codPre);
 		}
 
-		Prenotazione pre = servPre.selByCodicePrenot(prenotazione.getCodicePrenotazione());
+		Prenotazione pre = servPreC.selByCodicePrenot(prenotazione.getCodicePrenotazione());
 
 		if (pre == null) {
 			String ErrMsg = String.format(
@@ -146,10 +164,11 @@ public class UtilityControllo {
 	public void controlloDatePrenotazione(Prenotazione prenotazione) {
 
 		DateFormat df = new SimpleDateFormat(UtilityControllo.FORMATDATA);
+//		Date data = df.parse(prenotazione.getData().toString());
+//		
+//		log.info(data + "*****************data format");
 
-		String data = df.format(prenotazione.getData());
-
-		List<Prenotazione> listPre = servPre.selByData(data);
+		List<Prenotazione> listPre = servPreC.selByData(prenotazione.getData());
 		DateFormat df2 = new SimpleDateFormat(UtilityControllo.FormatOra);
 		DateFormat df3 = new SimpleDateFormat(UtilityControllo.FormatOra);
 
@@ -182,5 +201,69 @@ public class UtilityControllo {
 
 		}
 
+	}
+	
+	public static class Disponibility {
+		
+		@JsonProperty("oraInizio")
+		String oraInizio;
+		
+		@JsonProperty("oraFine")
+		String oraFine;
+		
+		@JsonProperty("available")
+		boolean available;
+	}
+	
+	public DisponibilitaCampo updateDisponibilita (Prenotazione prenotazione) {
+		
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat tf = new SimpleDateFormat("HH:mm");
+		
+//		String data = df.format(prenotazione.getData());
+		String inizio = tf.format(prenotazione.getOraInizio());
+		String fine = tf.format(prenotazione.getOraFine());
+		
+		List<DisponibilitaCampo> disponibilita = servDisponibilitaCampoC.selByCampoDate(
+				prenotazione.getCampo().getNumero(), 
+				prenotazione.getData());
+		
+		
+		String json = disponibilita.get(0).disponibilita;
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		List<Disponibility> disp = new ArrayList<Disponibility>();
+		
+		try {
+			disp = mapper.readValue(json , new TypeReference<List<Disponibility>>(){});
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	
+		for(int i  =0; i < disp.size(); i++) {
+			
+			if(disp.get(i).oraInizio.equals(inizio) && disp.get(i).oraFine.equals(fine)) {
+				disp.get(i).available = false;
+			}
+			
+		}
+		 
+		String jsonNew = "";
+		
+		try {
+			jsonNew = mapper.writeValueAsString(disp);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		DisponibilitaCampo addNewDisponibility = new DisponibilitaCampo(
+				disponibilita.get(0).getId(),
+				disponibilita.get(0).getCampo(),
+				disponibilita.get(0).getGiorno(),
+				jsonNew);
+		
+		return addNewDisponibility;
+		
 	}
 }

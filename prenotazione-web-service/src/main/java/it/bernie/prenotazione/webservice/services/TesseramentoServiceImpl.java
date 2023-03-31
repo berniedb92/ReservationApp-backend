@@ -88,4 +88,10 @@ public class TesseramentoServiceImpl implements TesseramentoService {
 		
 	}
 
+	@Override
+	public Tesseramento selByUser(String user) {
+		
+		return repoTess.selByClienteUser(user);
+	}
+
 }

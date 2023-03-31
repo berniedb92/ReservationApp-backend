@@ -23,6 +23,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import it.bernie.prenotazione.webservice.security.Utenti;
 import lombok.Data;
 
 
@@ -40,6 +41,9 @@ public class Tesseramento implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "codice_tessera")
 	private Integer codiceTessera;
+	
+	@Column(name="userid")
+	private String userId;
 	
 	@Column(name = "data_tesseramento")
 	private LocalDate dataTesseramento;

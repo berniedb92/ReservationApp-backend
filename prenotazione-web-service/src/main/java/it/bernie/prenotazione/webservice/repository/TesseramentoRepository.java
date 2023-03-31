@@ -10,8 +10,11 @@ import java.util.List;
 
 public interface TesseramentoRepository extends JpaRepository<Tesseramento, Integer> {
 	
-	@Query(value = "SELECT * FROM tesseramento t WHERE cliente=(:id)", nativeQuery = true)
+	@Query(value = "SELECT * FROM tesseramento WHERE cliente=(:id)", nativeQuery = true)
 	public Tesseramento selByCliente(@Param("id") Integer id);
+	
+	@Query(value = "SELECT * FROM tesseramento WHERE userid=(:user)", nativeQuery = true)
+	public Tesseramento selByClienteUser(@Param("user") String user);
 
 	@Query(value = "SELECT * FROM tesseramento INNER JOIN cliente ON cliente.id = tesseramento.cliente WHERE cliente.cognome LIKE CONCAT('%',:cognome,'%') AND tesseramento.attiva =true", nativeQuery = true)
 	public List<Tesseramento> selByClienteCognome(@Param("cognome") String cognome);

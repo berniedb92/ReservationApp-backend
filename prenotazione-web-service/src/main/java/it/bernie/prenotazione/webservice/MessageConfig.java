@@ -10,6 +10,9 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import it.bernie.prenotazione.webservice.utility.UtilityCalcolo;
+import it.bernie.prenotazione.webservice.utility.UtilityControllo;
+
 @Configuration
 public class MessageConfig 
 {
@@ -40,6 +43,22 @@ public class MessageConfig
 		resource.setUseCodeAsDefaultMessage(true);
 
 		return resource;
+	}
+	
+	@Bean
+	public UtilityControllo utilityControllo()
+	{
+		UtilityControllo controllo = new UtilityControllo();
+
+		return controllo;
+	}
+	
+	@Bean
+	public UtilityCalcolo utilityCalcolo()
+	{
+		UtilityCalcolo calcolo = new UtilityCalcolo();
+
+		return calcolo;
 	}
 }
 

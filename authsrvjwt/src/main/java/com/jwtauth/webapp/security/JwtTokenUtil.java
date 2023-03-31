@@ -30,6 +30,8 @@ public class JwtTokenUtil implements Serializable {
 
 	@Autowired
 	private JwtConfig jwtConfig;
+	
+	
 
 
 	public String getUsernameFromToken(String token) 
@@ -112,6 +114,8 @@ public class JwtTokenUtil implements Serializable {
 		final Date expirationDate = calculateExpirationDate(createdDate);
 		
 		final String secret = jwtConfig.getSecret();
+		
+		log.info("***********************************"+ userDetails +"*********************************");
 
 		return Jwts.builder()
 				.setClaims(claims)

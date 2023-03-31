@@ -1,6 +1,7 @@
 package it.bernie.prenotazione.webservice.entity;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,9 +29,22 @@ public class DisponibilitaCampo {
 	public Campo campo;
 	
 	@Column(name="giorno")
-	public LocalDate giorno;
+	public Date giorno;
 	
 	@Column(name="disponibilita")
 	public String disponibilita;
+	
+	public DisponibilitaCampo() {
+		super();
+	}
+	
+	public DisponibilitaCampo(long id, Campo campo, Date giorno, String disponibilita) {
+		super();
+		this.id = id;
+		this.campo = campo;
+		this.giorno = giorno;
+		this.disponibilita = disponibilita;
+	}
+	
 
 }

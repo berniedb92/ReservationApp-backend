@@ -54,8 +54,7 @@ public class UtentiController {
 	public ResponseEntity<List<Utenti>> SelUtenti() throws NotFoundException {
 		
 		log.info("selezioniamo tutti gli utenti");
-
-		
+	
 		List<Utenti> utenti = utentiService.SelTutti();
 		
 		if(utenti.isEmpty()) {
@@ -89,9 +88,13 @@ public class UtentiController {
 	}
 	
 	@PostMapping(value = "/inserisci")
-	public ResponseEntity<InfoMsg> InsUtente(@Valid @RequestBody Utenti utente, BindingResult bindingResult) throws BindingException {
+	public ResponseEntity<InfoMsg> InsUtente(@RequestBody Utenti utente) {
 		
-		Utenti checkUtente = utentiService.findByUserId(utente.getUserId());
+		log.info("inizio inserimento"+ utente.getUserid());
+		
+		Utenti checkUtente = utentiService.findByUserId(utente.getUserid());
+		
+		log.info("utente" + checkUtente);
 		
 		if(checkUtente != null) {
 			
@@ -104,20 +107,20 @@ public class UtentiController {
 			
 		}
 		
-		if(bindingResult.hasErrors()) {
-			String msgErr = errMessage.getMessage(bindingResult.getFieldError(), LocaleContextHolder.getLocale());
-			
-			log.warn(msgErr);
-			
-			throw new BindingException(msgErr);
-		}
+//		if(bindingResult.hasErrors()) {
+//			String msgErr = errMessage.getMessage(bindingResult.getFieldError(), LocaleContextHolder.getLocale());
+//			
+//			log.warn(msgErr);
+//			
+//			throw new BindingException(msgErr);
+//		}
 		
 		String encodedPassword = passwordEncoder.encode(utente.getPassword());
 		utente.setPassword(encodedPassword);
 		utentiService.InsUtente(utente);
 		
 		return new ResponseEntity<InfoMsg>(new InfoMsg(LocalDate.now(),
-				String.format("Inserimento Utente %s Eseguita Con Successo", utente.getUserId())), new HttpHeaders(), HttpStatus.CREATED);
+				String.format("Inserimento Utente %s Eseguita Con Successo", utente.getUserid())), new HttpHeaders(), HttpStatus.CREATED);
 		
 	}
 	

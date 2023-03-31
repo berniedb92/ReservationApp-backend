@@ -2,6 +2,9 @@ package com.gestuser.webapp;
 
 import java.util.Locale;
 
+import javax.activation.DataSource;
+
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

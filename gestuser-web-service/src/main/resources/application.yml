@@ -10,14 +10,3 @@ spring:
 #==========================================================
 #= PARAMETRI DB MONGODB 
 #==========================================================
-  data:
-    mongodb:
-      authentication-database: admin
-      database: reserve-users
-      host: localhost
-      password: foxmulder
-      port: 37017
-      username: bernie
-      auto-index-creation: true
-
-      
